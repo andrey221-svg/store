@@ -3,33 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>החנות שלי</title>
+<title>התפריט שלי</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #6C5CE7;
-  --primary-light: #a29bfe;
-  --primary-dark: #5541d6;
-  --accent: #00cec9;
-  --accent2: #fd79a8;
-  --bg: #f8f9fe;
+  --primary: #E85D26;
+  --primary-light: #FF8C5A;
+  --primary-dark: #C74B1A;
+  --accent: #2D2D2D;
+  --warm: #FFF8F0;
+  --warm2: #FFF1E6;
+  --bg: #FAFAF7;
   --card: #ffffff;
-  --text: #2d3436;
-  --text-light: #636e72;
-  --text-muted: #b2bec3;
-  --border: #eef0f8;
-  --success: #00b894;
-  --danger: #e17055;
-  --shadow-sm: 0 2px 8px rgba(108,92,231,0.08);
-  --shadow-md: 0 8px 30px rgba(108,92,231,0.12);
-  --shadow-lg: 0 20px 60px rgba(108,92,231,0.15);
-  --radius: 16px;
-  --radius-sm: 10px;
+  --text: #2D2D2D;
+  --text-light: #7A7A7A;
+  --text-muted: #BEBEBE;
+  --border: #F0EDE8;
+  --success: #4CAF50;
+  --danger: #E53935;
+  --gold: #F5A623;
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 30px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+  --radius: 20px;
+  --radius-sm: 12px;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   font-family: 'Heebo', sans-serif;
   background: var(--bg);
@@ -38,563 +38,279 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== ADMIN PANEL ===== */
+/* ===== ADMIN ===== */
 .admin-page { padding: 20px; max-width: 900px; margin: 0 auto; }
-
-.admin-header {
-  text-align: center;
-  padding: 40px 20px;
-  margin-bottom: 30px;
-}
+.admin-header { text-align: center; padding: 40px 20px; margin-bottom: 30px; }
 .admin-header h1 {
-  font-size: 36px;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--primary), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 36px; font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
 }
 .admin-header p { color: var(--text-light); font-size: 16px; }
 
 .setup-card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 28px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
+  background: var(--card); border-radius: var(--radius);
+  padding: 28px; margin-bottom: 20px;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--border);
 }
 .setup-card h2 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-size: 18px; font-weight: 700; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
 }
 .setup-card h2 .icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
 }
-.icon-purple { background: rgba(108,92,231,0.1); }
-.icon-green { background: rgba(0,206,201,0.1); }
-.icon-pink { background: rgba(253,121,168,0.1); }
+.icon-orange { background: rgba(232,93,38,0.1); }
+.icon-green { background: rgba(76,175,80,0.1); }
+.icon-gold { background: rgba(245,166,35,0.1); }
 
 .form-group { margin-bottom: 16px; }
-.form-group label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: var(--text-light);
-}
+.form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text-light); }
 .form-input {
-  width: 100%;
-  padding: 14px 16px;
-  border: 2px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: 16px;
-  font-family: 'Heebo', sans-serif;
-  transition: all 0.3s;
-  background: #fafbff;
-  text-align: right;
+  width: 100%; padding: 14px 16px;
+  border: 2px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 16px; font-family: 'Heebo', sans-serif;
+  transition: all 0.3s; background: var(--warm); text-align: right;
 }
-.form-input:focus {
-  outline: none;
-  border-color: var(--primary-light);
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
-}
+.form-input:focus { outline: none; border-color: var(--primary-light); background: #fff; box-shadow: 0 0 0 4px rgba(232,93,38,0.1); }
 .form-input::placeholder { color: var(--text-muted); }
-
-.form-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 12px;
-  align-items: end;
-}
+.form-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; align-items: end; }
 
 .btn {
-  padding: 14px 28px;
-  border: none;
-  border-radius: var(--radius-sm);
-  font-size: 16px;
-  font-weight: 600;
-  font-family: 'Heebo', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  padding: 14px 28px; border: none; border-radius: var(--radius-sm);
+  font-size: 16px; font-weight: 600; font-family: 'Heebo', sans-serif;
+  cursor: pointer; transition: all 0.3s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
 }
 .btn:active { transform: scale(0.97); }
-
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(108,92,231,0.3);
+  color: #fff; box-shadow: 0 4px 15px rgba(232,93,38,0.3);
 }
-.btn-primary:hover { box-shadow: 0 6px 20px rgba(108,92,231,0.4); transform: translateY(-1px); }
-
-.btn-add {
-  background: var(--primary);
-  color: #fff;
-  width: 100%;
-  padding: 14px;
-  font-size: 16px;
-  margin-top: 8px;
-}
+.btn-primary:hover { box-shadow: 0 6px 20px rgba(232,93,38,0.4); transform: translateY(-1px); }
+.btn-add { background: var(--primary); color: #fff; width: 100%; padding: 14px; font-size: 16px; margin-top: 8px; }
 .btn-add:hover { background: var(--primary-dark); }
-
-.btn-success {
-  background: linear-gradient(135deg, var(--success), #00a381);
-  color: #fff;
-  width: 100%;
-  padding: 16px;
-  font-size: 18px;
-  box-shadow: 0 4px 15px rgba(0,184,148,0.3);
-}
-.btn-success:hover { box-shadow: 0 6px 20px rgba(0,184,148,0.4); transform: translateY(-1px); }
-
 .btn-whatsapp {
-  background: linear-gradient(135deg, #25d366, #128C7E);
-  color: #fff;
-  width: 100%;
-  padding: 16px;
-  font-size: 18px;
+  background: linear-gradient(135deg, #25d366, #128C7E); color: #fff;
+  width: 100%; padding: 16px; font-size: 18px;
   box-shadow: 0 4px 15px rgba(37,211,102,0.3);
 }
 .btn-whatsapp:hover { box-shadow: 0 6px 20px rgba(37,211,102,0.4); transform: translateY(-1px); }
 
-.btn-outline {
-  background: transparent;
-  border: 2px solid var(--border);
-  color: var(--text-light);
-  padding: 12px 20px;
-}
-.btn-outline:hover { border-color: var(--primary-light); color: var(--primary); }
-
 .product-admin-list { margin-top: 20px; }
-
 .product-admin-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  background: #fafbff;
-  border-radius: var(--radius-sm);
-  margin-bottom: 10px;
-  border: 1px solid var(--border);
-  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px; background: var(--warm); border-radius: var(--radius-sm);
+  margin-bottom: 10px; border: 1px solid var(--border); transition: all 0.2s;
 }
 .product-admin-item:hover { border-color: var(--primary-light); }
-
-.product-admin-info {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex: 1;
-}
+.product-admin-info { display: flex; align-items: center; gap: 14px; flex: 1; }
 .product-admin-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--primary-light), var(--accent));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
+  width: 50px; height: 50px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
 }
 .product-admin-name { font-weight: 600; }
 .product-admin-price { color: var(--primary); font-weight: 700; }
-
 .btn-remove {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(225,112,85,0.1);
-  color: var(--danger);
-  cursor: pointer;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
+  width: 36px; height: 36px; border-radius: 50%; border: none;
+  background: rgba(229,57,53,0.1); color: var(--danger);
+  cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
 }
-.btn-remove:hover { background: rgba(225,112,85,0.2); }
-
-.empty-products {
-  text-align: center;
-  padding: 40px;
-  color: var(--text-muted);
-}
+.btn-remove:hover { background: rgba(229,57,53,0.2); }
+.empty-products { text-align: center; padding: 40px; color: var(--text-muted); }
 .empty-products .icon { font-size: 48px; margin-bottom: 12px; }
 
-.share-section {
-  text-align: center;
-  padding: 10px 0;
-}
 .share-url {
-  background: #fafbff;
-  border: 2px dashed var(--primary-light);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  margin: 16px 0;
-  word-break: break-all;
-  font-size: 14px;
-  color: var(--primary);
-  cursor: pointer;
-  transition: all 0.2s;
-  direction: ltr;
-  text-align: center;
+  background: var(--warm); border: 2px dashed var(--primary-light);
+  border-radius: var(--radius-sm); padding: 16px; margin: 16px 0;
+  word-break: break-all; font-size: 14px; color: var(--primary);
+  cursor: pointer; transition: all 0.2s; direction: ltr; text-align: center;
 }
-.share-url:hover { background: rgba(108,92,231,0.05); }
-
+.share-url:hover { background: var(--warm2); }
 .copied-toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
+  position: fixed; bottom: 30px; left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: var(--text);
-  color: #fff;
-  padding: 14px 28px;
-  border-radius: 50px;
-  font-size: 15px;
-  font-weight: 500;
-  z-index: 1000;
+  background: var(--accent); color: #fff; padding: 14px 28px;
+  border-radius: 50px; font-size: 15px; font-weight: 500; z-index: 1000;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: var(--shadow-lg);
 }
 .copied-toast.show { transform: translateX(-50%) translateY(0); }
 
 /* ===== STORE FRONT ===== */
-.store-page { min-height: 100vh; }
-
+.store-page { min-height: 100vh; background: var(--bg); }
+.store-logo {
+  width: 140px; height: 140px; margin: 0 auto 16px;
+}
 .store-hero {
-  background: linear-gradient(135deg, var(--primary) 0%, #a29bfe 50%, var(--accent2) 100%);
-  padding: 50px 20px 60px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(135deg, var(--accent) 0%, #3D3D3D 100%);
+  padding: 50px 20px 70px; text-align: center;
+  position: relative; overflow: hidden;
 }
 .store-hero::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-  animation: pulse 4s ease-in-out infinite;
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+.store-hero-badge {
+  display: inline-block; background: var(--primary); color: #fff;
+  padding: 6px 16px; border-radius: 50px; font-size: 13px; font-weight: 600;
+  margin-bottom: 14px; position: relative; letter-spacing: 0.5px;
 }
 .store-hero h1 {
-  font-size: 38px;
-  font-weight: 900;
-  color: #fff;
-  position: relative;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  font-size: 42px; font-weight: 900; color: #fff;
+  position: relative; margin-bottom: 10px;
 }
 .store-hero p {
-  color: rgba(255,255,255,0.85);
-  font-size: 16px;
-  position: relative;
+  color: rgba(255,255,255,0.7); font-size: 16px; position: relative;
+  max-width: 400px; margin: 0 auto;
 }
-
 .store-content {
-  max-width: 900px;
-  margin: -30px auto 0;
-  padding: 0 16px 120px;
-  position: relative;
+  max-width: 900px; margin: -35px auto 0;
+  padding: 0 16px 130px; position: relative;
 }
-
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
 }
-
 .product-card {
-  background: var(--card);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-  transition: all 0.3s;
-  display: flex;
-  flex-direction: column;
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border); transition: all 0.3s;
+  display: flex; flex-direction: column;
 }
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-
+.product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
 .product-img {
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 56px;
-  position: relative;
-  overflow: hidden;
+  height: 130px; display: flex; align-items: center;
+  justify-content: center; font-size: 20px; font-weight: 800;
+  position: relative; overflow: hidden; color: #fff;
+  letter-spacing: 1px;
 }
-.product-img::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.15;
-}
-
 .product-body {
-  padding: 18px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  padding: 20px; flex: 1; display: flex; flex-direction: column;
 }
-.product-name {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.product-desc {
-  font-size: 13px;
-  color: var(--text-light);
-  margin-bottom: 14px;
-  flex: 1;
-}
-.product-price {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--primary);
-  margin-bottom: 14px;
-}
-
+.product-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--accent); }
+.product-desc { font-size: 13px; color: var(--text-light); margin-bottom: 16px; flex: 1; line-height: 1.5; }
+.product-price { font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 4px; }
+.product-stock { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
 .qty-control {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  background: #f8f9fe;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  border: 2px solid var(--border);
+  display: flex; align-items: center; gap: 0;
+  background: var(--warm); border-radius: var(--radius-sm);
+  overflow: hidden; border: 2px solid var(--border);
 }
 .qty-btn {
-  width: 44px;
-  height: 44px;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  font-weight: 700;
-  cursor: pointer;
-  color: var(--primary);
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 48px; height: 48px; border: none; background: transparent;
+  font-size: 22px; font-weight: 700; cursor: pointer; color: var(--primary);
+  transition: all 0.2s; display: flex; align-items: center; justify-content: center;
 }
-.qty-btn:hover { background: rgba(108,92,231,0.1); }
+.qty-btn:hover { background: rgba(232,93,38,0.1); }
 .qty-btn:disabled { color: var(--text-muted); cursor: default; }
 .qty-btn:disabled:hover { background: transparent; }
-.qty-display {
-  flex: 1;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-  min-width: 40px;
-}
+.qty-display { flex: 1; text-align: center; font-size: 20px; font-weight: 700; color: var(--text); min-width: 40px; }
 .qty-display.has-items { color: var(--primary); }
 
 /* Cart Bar */
 .cart-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--card);
-  border-top: 1px solid var(--border);
-  padding: 16px 20px;
-  box-shadow: 0 -8px 30px rgba(0,0,0,0.1);
-  z-index: 100;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--accent); padding: 0; z-index: 100;
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.2);
 }
 .cart-bar.visible { transform: translateY(0); }
 .cart-bar-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  max-width: 900px; margin: 0 auto; padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
-.cart-info {
-  display: flex;
-  flex-direction: column;
-}
-.cart-count { font-size: 14px; color: var(--text-light); }
-.cart-total { font-size: 22px; font-weight: 800; color: var(--primary); }
+.cart-info { display: flex; flex-direction: column; }
+.cart-count { font-size: 13px; color: rgba(255,255,255,0.6); }
+.cart-total { font-size: 24px; font-weight: 800; color: #fff; }
 .btn-checkout {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff;
-  border: none;
-  padding: 14px 32px;
-  border-radius: var(--radius-sm);
-  font-size: 16px;
-  font-weight: 700;
-  font-family: 'Heebo', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(108,92,231,0.3);
-  white-space: nowrap;
+  background: var(--primary); color: #fff; border: none;
+  padding: 14px 32px; border-radius: var(--radius-sm);
+  font-size: 16px; font-weight: 700; font-family: 'Heebo', sans-serif;
+  cursor: pointer; transition: all 0.3s; white-space: nowrap;
 }
-.btn-checkout:hover { box-shadow: 0 6px 20px rgba(108,92,231,0.4); transform: translateY(-1px); }
+.btn-checkout:hover { background: var(--primary-dark); transform: translateY(-1px); }
 
 /* Modal */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px); z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s;
 }
 .modal-overlay.active { opacity: 1; pointer-events: all; }
-
 .modal {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 32px;
-  width: 100%;
-  max-width: 480px;
+  background: var(--card); border-radius: var(--radius);
+  padding: 32px; width: 100%; max-width: 480px;
   box-shadow: var(--shadow-lg);
-  transform: scale(0.9) translateY(20px);
-  transition: transform 0.3s;
-  max-height: 90vh;
-  overflow-y: auto;
+  transform: scale(0.9) translateY(20px); transition: transform 0.3s;
+  max-height: 90vh; overflow-y: auto;
 }
 .modal-overlay.active .modal { transform: scale(1) translateY(0); }
-.modal h2 {
-  font-size: 24px;
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-.modal p {
-  color: var(--text-light);
-  margin-bottom: 24px;
-}
-
+.modal h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+.modal p { color: var(--text-light); margin-bottom: 24px; }
 .order-summary {
-  background: #fafbff;
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  margin-bottom: 20px;
-  border: 1px solid var(--border);
+  background: var(--warm); border-radius: var(--radius-sm);
+  padding: 16px; margin-bottom: 20px; border: 1px solid var(--border);
 }
-.order-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
+.order-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .order-item:last-child { border-bottom: none; }
-.order-item-name { font-weight: 500; }
+.order-item-name { font-weight: 600; }
 .order-item-detail { color: var(--text-light); font-size: 14px; }
 .order-item-price { font-weight: 700; color: var(--primary); }
 .order-total {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 12px;
-  margin-top: 8px;
-  border-top: 2px solid var(--primary);
-  font-size: 18px;
-  font-weight: 800;
+  display: flex; justify-content: space-between;
+  padding-top: 12px; margin-top: 8px; border-top: 2px solid var(--primary);
+  font-size: 20px; font-weight: 800;
 }
 .order-total span:last-child { color: var(--primary); }
-
 .modal .form-group { margin-bottom: 14px; }
-
 .btn-send-order {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff;
-  border: none;
-  width: 100%;
-  padding: 16px;
-  border-radius: var(--radius-sm);
-  font-size: 18px;
-  font-weight: 700;
-  font-family: 'Heebo', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(37,211,102,0.3);
-  margin-top: 8px;
+  color: #fff; border: none; width: 100%; padding: 16px;
+  border-radius: var(--radius-sm); font-size: 18px; font-weight: 700;
+  font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(232,93,38,0.3); margin-top: 8px;
 }
-.btn-send-order:hover { box-shadow: 0 6px 20px rgba(108,92,231,0.4); transform: translateY(-1px); }
+.btn-send-order:hover { box-shadow: 0 6px 20px rgba(232,93,38,0.4); transform: translateY(-1px); }
 .btn-send-order:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
 .btn-close-modal {
-  background: transparent;
-  border: 2px solid var(--border);
-  color: var(--text-light);
-  width: 100%;
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  font-size: 15px;
-  font-weight: 600;
-  font-family: 'Heebo', sans-serif;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: all 0.2s;
+  background: transparent; border: 2px solid var(--border); color: var(--text-light);
+  width: 100%; padding: 12px; border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 600; font-family: 'Heebo', sans-serif;
+  cursor: pointer; margin-top: 10px; transition: all 0.2s;
 }
 .btn-close-modal:hover { border-color: var(--primary-light); color: var(--primary); }
 
-/* Color options for products */
-.color-1 { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
-.color-2 { background: linear-gradient(135deg, #00cec9, #81ecec); }
-.color-3 { background: linear-gradient(135deg, #fd79a8, #e84393); }
-.color-4 { background: linear-gradient(135deg, #fdcb6e, #f39c12); }
-.color-5 { background: linear-gradient(135deg, #55efc4, #00b894); }
-.color-6 { background: linear-gradient(135deg, #74b9ff, #0984e3); }
-.color-7 { background: linear-gradient(135deg, #fab1a0, #e17055); }
-.color-8 { background: linear-gradient(135deg, #dfe6e9, #b2bec3); }
-
-.divider {
-  height: 1px;
-  background: var(--border);
-  margin: 24px 0;
-}
+/* Food colors */
+.food-1 { background: linear-gradient(135deg, #E85D26, #FF8C5A); }
+.food-2 { background: linear-gradient(135deg, #D4A373, #E6C9A8); }
+.food-3 { background: linear-gradient(135deg, #4CAF50, #81C784); }
+.food-4 { background: linear-gradient(135deg, #F5A623, #FFCC02); }
+.food-5 { background: linear-gradient(135deg, #E53935, #FF7043); }
+.food-6 { background: linear-gradient(135deg, #8D6E63, #A1887F); }
+.food-7 { background: linear-gradient(135deg, #FF7043, #FFAB91); }
+.food-8 { background: linear-gradient(135deg, #66BB6A, #A5D6A7); }
 
 @media (max-width: 600px) {
   .form-row { grid-template-columns: 1fr; }
   .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .product-img { height: 100px; font-size: 40px; }
-  .product-body { padding: 12px; }
+  .product-img { height: 90px; font-size: 16px; }
+  .product-body { padding: 14px; }
   .product-name { font-size: 15px; }
-  .product-price { font-size: 18px; }
-  .store-hero h1 { font-size: 28px; }
-  .cart-bar-inner { flex-direction: row; }
+  .product-price { font-size: 20px; }
+  .store-hero h1 { font-size: 30px; }
+  .store-hero { padding: 40px 20px 60px; }
   .btn-checkout { padding: 12px 20px; font-size: 15px; }
   .modal { padding: 24px 18px; }
   .admin-header h1 { font-size: 28px; }
-  .qty-btn { width: 36px; height: 36px; }
+  .qty-btn { width: 40px; height: 40px; }
 }
 @media (max-width: 380px) {
   .product-grid { grid-template-columns: 1fr; }
@@ -606,16 +322,35 @@ body {
 <!-- ===== ADMIN PAGE ===== -->
 <div id="adminPage" class="admin-page">
   <div class="admin-header">
-    <h1>🏪 הגדרת החנות שלך</h1>
-    <p>הוסף מוצרים, קבע מחירים, ושתף את הקישור עם הלקוחות</p>
+    <div class="store-logo" style="margin-bottom:16px;">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#722F37" stroke-width="3" opacity="0.3"/>
+        <circle cx="100" cy="100" r="85" fill="none" stroke="#722F37" stroke-width="1.5" opacity="0.2"/>
+        <ellipse cx="100" cy="100" rx="88" ry="86" fill="none" stroke="#722F37" stroke-width="2" opacity="0.25"/>
+        <circle cx="30" cy="80" r="8" fill="#722F37" opacity="0.12"/>
+        <circle cx="170" cy="75" r="6" fill="#722F37" opacity="0.1"/>
+        <circle cx="25" cy="110" r="5" fill="#722F37" opacity="0.08"/>
+        <circle cx="172" cy="120" r="7" fill="#722F37" opacity="0.1"/>
+        <circle cx="100" cy="100" r="78" fill="#722F37" opacity="0.06"/>
+        <g transform="translate(82, 28) scale(0.38)" fill="#722F37" opacity="0.6">
+          <path d="M48 0C36 0 20 30 20 50c0 16 10 28 24 32v30H28c-2 0-4 2-4 4s2 4 4 4h40c2 0 4-2 4-4s-2-4-4-4H52V82c14-4 24-16 24-32C76 30 60 0 48 0z"/>
+        </g>
+        <text x="100" y="105" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" font-weight="700" fill="#722F37" letter-spacing="1">Daniely</text>
+        <text x="100" y="130" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="14" fill="#722F37" letter-spacing="3" font-weight="400">PRIVATE CHEF</text>
+        <line x1="45" y1="138" x2="80" y2="138" stroke="#722F37" stroke-width="0.8" opacity="0.4"/>
+        <line x1="120" y1="138" x2="155" y2="138" stroke="#722F37" stroke-width="0.8" opacity="0.4"/>
+        <circle cx="100" cy="138" r="2" fill="#722F37" opacity="0.4"/>
+      </svg>
+    </div>
+    <h1>🍽️ הגדרת התפריט שלך</h1>
+    <p>הוסף מנות, קבע מחירים, ושתף את הקישור עם הלקוחות</p>
   </div>
 
-  <!-- Store Settings -->
   <div class="setup-card">
-    <h2><span class="icon icon-purple">🏷️</span> פרטי החנות</h2>
+    <h2><span class="icon icon-orange">🏷️</span> פרטי העסק</h2>
     <div class="form-group">
-      <label>שם החנות / העסק</label>
-      <input class="form-input" type="text" id="storeName" placeholder="למשל: הבוטיק של דנה" />
+      <label>שם העסק</label>
+      <input class="form-input" type="text" id="storeName" placeholder="למשל: המטבח של אנדריי" />
     </div>
     <div class="form-group">
       <label>מספר וואטסאפ שלך (לקבלת הזמנות)</label>
@@ -623,41 +358,38 @@ body {
     </div>
   </div>
 
-  <!-- Add Products -->
   <div class="setup-card">
-    <h2><span class="icon icon-green">📦</span> הוספת מוצרים</h2>
+    <h2><span class="icon icon-green">🍳</span> הוספת מנות</h2>
     <div class="form-row">
       <div class="form-group">
-        <label>שם המוצר</label>
-        <input class="form-input" type="text" id="pName" placeholder="למשל: חולצת כותנה" />
+        <label>שם המנה</label>
+        <input class="form-input" type="text" id="pName" placeholder="למשל: חומוס עם פטרוזיליה" />
       </div>
       <div class="form-group">
         <label>מחיר (₪)</label>
-        <input class="form-input" type="number" id="pPrice" placeholder="99" min="0" step="0.01" dir="ltr" style="text-align:center;" />
+        <input class="form-input" type="number" id="pPrice" placeholder="35" min="0" step="0.5" dir="ltr" style="text-align:center;" />
       </div>
       <div class="form-group">
-        <label>מלאי (כמות)</label>
-        <input class="form-input" type="number" id="pStock" placeholder="10" min="1" step="1" dir="ltr" style="text-align:center;" />
+        <label>מנות זמינות</label>
+        <input class="form-input" type="number" id="pStock" placeholder="20" min="1" step="1" dir="ltr" style="text-align:center;" />
       </div>
     </div>
     <div class="form-group">
-      <label>תיאור קצר (לא חובה)</label>
-      <input class="form-input" type="text" id="pDesc" placeholder="למשל: 100% כותנה, מידות S-XL" />
+      <label>תיאור (לא חובה)</label>
+      <input class="form-input" type="text" id="pDesc" placeholder="למשל: מוגש עם פיתה חמה, טחינה ושמן זית" />
     </div>
-    <button class="btn btn-add" onclick="addProduct()">➕ הוסף מוצר</button>
-
+    <button class="btn btn-add" onclick="addProduct()">➕ הוסף מנה</button>
     <div class="product-admin-list" id="adminProductList">
       <div class="empty-products">
-        <div class="icon">📦</div>
-        <div>עדיין לא הוספת מוצרים</div>
+        <div class="icon">🍽️</div>
+        <div>עדיין לא הוספת מנות</div>
       </div>
     </div>
   </div>
 
-  <!-- Share -->
   <div class="setup-card" id="shareCard" style="display:none;">
-    <h2><span class="icon icon-pink">🔗</span> שיתוף החנות</h2>
-    <p style="color:var(--text-light);margin-bottom:16px;">הלקוחות יבחרו מוצרים, ימלאו פרטים, וישלחו לך הזמנה בוואטסאפ</p>
+    <h2><span class="icon icon-gold">🔗</span> שיתוף התפריט</h2>
+    <p style="color:var(--text-light);margin-bottom:16px;">הלקוחות יבחרו מנות, ימלאו פרטים, וההזמנה תגיע אליך לטלגרם</p>
     <div class="share-url" id="shareUrl" onclick="copyStoreLink()"></div>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-primary" style="flex:1;" onclick="copyStoreLink()">📋 העתק קישור</button>
@@ -669,21 +401,48 @@ body {
 <!-- ===== STORE FRONT ===== -->
 <div id="storePage" class="store-page" style="display:none;">
   <div class="store-hero">
-    <h1 id="storeTitle">החנות שלי</h1>
-    <p id="storeSubtitle">בחרו מוצרים והזמינו בקלות</p>
+    <div class="store-logo">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Wine stain circle -->
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#722F37" stroke-width="3" opacity="0.3"/>
+        <circle cx="100" cy="100" r="85" fill="none" stroke="#722F37" stroke-width="1.5" opacity="0.2"/>
+        <ellipse cx="100" cy="100" rx="88" ry="86" fill="none" stroke="#722F37" stroke-width="2" opacity="0.25"/>
+        <!-- Wine stain splatter effect -->
+        <circle cx="30" cy="80" r="8" fill="#722F37" opacity="0.12"/>
+        <circle cx="170" cy="75" r="6" fill="#722F37" opacity="0.1"/>
+        <circle cx="25" cy="110" r="5" fill="#722F37" opacity="0.08"/>
+        <circle cx="172" cy="120" r="7" fill="#722F37" opacity="0.1"/>
+        <!-- Inner circle area -->
+        <circle cx="100" cy="100" r="78" fill="#722F37" opacity="0.06"/>
+        <!-- Wine glass icon -->
+        <g transform="translate(82, 28) scale(0.38)" fill="#722F37" opacity="0.6">
+          <path d="M48 0C36 0 20 30 20 50c0 16 10 28 24 32v30H28c-2 0-4 2-4 4s2 4 4 4h40c2 0 4-2 4-4s-2-4-4-4H52V82c14-4 24-16 24-32C76 30 60 0 48 0z"/>
+        </g>
+        <!-- "Daniely" text -->
+        <text x="100" y="105" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" font-weight="700" fill="#722F37" letter-spacing="1">Daniely</text>
+        <!-- "Private Chef" text -->
+        <text x="100" y="130" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="14" fill="#722F37" letter-spacing="3" font-weight="400">PRIVATE CHEF</text>
+        <!-- Decorative lines -->
+        <line x1="45" y1="138" x2="80" y2="138" stroke="#722F37" stroke-width="0.8" opacity="0.4"/>
+        <line x1="120" y1="138" x2="155" y2="138" stroke="#722F37" stroke-width="0.8" opacity="0.4"/>
+        <circle cx="100" cy="138" r="2" fill="#722F37" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="store-hero-badge">📍 הזמנה אונליין</div>
+    <h1 id="storeTitle">התפריט שלי</h1>
+    <p id="storeSubtitle">בחרו מנות והזמינו ישירות</p>
   </div>
   <div class="store-content">
     <div class="product-grid" id="productGrid"></div>
   </div>
 
-  <!-- Cart Bar -->
   <div class="cart-bar" id="cartBar">
     <div class="cart-bar-inner">
       <div class="cart-info">
         <span class="cart-count" id="cartCount">0 פריטים</span>
         <span class="cart-total" id="cartTotal">₪0</span>
       </div>
-      <button class="btn-checkout" onclick="openCheckout()">📩 לשליחת הזמנה</button>
+      <button class="btn-checkout" onclick="openCheckout()">📩 שלח הזמנה</button>
     </div>
   </div>
 </div>
@@ -691,11 +450,9 @@ body {
 <!-- ===== CHECKOUT MODAL ===== -->
 <div class="modal-overlay" id="checkoutModal">
   <div class="modal">
-    <h2>📩 שליחת הזמנה</h2>
-    <p>מלאו את הפרטים ונשלח את ההזמנה למוכר</p>
-
+    <h2>🧾 סיכום הזמנה</h2>
+    <p>בדקו את ההזמנה ומלאו פרטים לשליחה</p>
     <div class="order-summary" id="orderSummary"></div>
-
     <div class="form-group">
       <label>השם שלך *</label>
       <input class="form-input" type="text" id="custName" placeholder="השם המלא שלך" />
@@ -706,26 +463,24 @@ body {
     </div>
     <div class="form-group">
       <label>הערות (לא חובה)</label>
-      <input class="form-input" type="text" id="custNotes" placeholder="בקשות מיוחדות, מידות וכו׳" />
+      <input class="form-input" type="text" id="custNotes" placeholder="ללא בצל, תוספת חריף..." />
     </div>
-
     <button class="btn-send-order" id="sendBtn" onclick="sendOrder()">📩 שלח הזמנה</button>
     <div id="sendError" style="display:none;color:var(--danger);text-align:center;margin-top:10px;font-size:14px;"></div>
-    <button class="btn-close-modal" onclick="closeCheckout()">חזור לחנות</button>
+    <button class="btn-close-modal" onclick="closeCheckout()">חזרה לתפריט</button>
   </div>
 </div>
 
 <!-- Success Modal -->
 <div class="modal-overlay" id="successModal">
   <div class="modal" style="text-align:center;">
-    <div style="font-size:64px;margin-bottom:16px;">✅</div>
+    <div style="font-size:64px;margin-bottom:16px;">🎉</div>
     <h2 style="color:var(--success);">ההזמנה נשלחה בהצלחה!</h2>
-    <p style="margin-top:12px;">ההזמנה שלך נשלחה למוכר. הוא ייצור איתך קשר בהקדם.</p>
+    <p style="margin-top:12px;">ההזמנה שלך התקבלה. ניצור איתך קשר בהקדם. בתיאבון!</p>
     <button class="btn-close-modal" onclick="closeSuccess()" style="margin-top:20px;">סגור</button>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="copied-toast" id="toast">✅ הקישור הועתק!</div>
 
 <script>
@@ -738,15 +493,11 @@ function addProduct() {
   const price = parseFloat(document.getElementById('pPrice').value);
   const desc = document.getElementById('pDesc').value.trim();
   const stock = parseInt(document.getElementById('pStock').value);
-
   if (!name) { shakeInput('pName'); return; }
   if (isNaN(price) || price <= 0) { shakeInput('pPrice'); return; }
   if (isNaN(stock) || stock <= 0) { shakeInput('pStock'); return; }
-
   products.push({ name, price, desc, stock, id: Date.now() });
-  renderAdminProducts();
-  updateShareLink();
-
+  renderAdminProducts(); updateShareLink();
   document.getElementById('pName').value = '';
   document.getElementById('pPrice').value = '';
   document.getElementById('pDesc').value = '';
@@ -764,25 +515,24 @@ function shakeInput(id) {
 
 function removeProduct(id) {
   products = products.filter(p => p.id !== id);
-  renderAdminProducts();
-  updateShareLink();
+  renderAdminProducts(); updateShareLink();
 }
 
 function renderAdminProducts() {
   const container = document.getElementById('adminProductList');
   if (products.length === 0) {
-    container.innerHTML = '<div class="empty-products"><div class="icon">📦</div><div>עדיין לא הוספת מוצרים</div></div>';
+    container.innerHTML = '<div class="empty-products"><div class="icon">🍽️</div><div>עדיין לא הוספת מנות</div></div>';
     document.getElementById('shareCard').style.display = 'none';
     return;
   }
-
+  const colors = ['food-1','food-2','food-3','food-4','food-5','food-6','food-7','food-8'];
   container.innerHTML = products.map((p, idx) => `
     <div class="product-admin-item">
       <div class="product-admin-info">
-        <div class="product-admin-img color-${(idx % 8) + 1}" style="color:#fff;font-weight:700;font-size:16px;">${esc(p.name).charAt(0)}</div>
+        <div class="product-admin-img ${colors[idx % 8]}" style="color:#fff;font-weight:700;font-size:16px;">${esc(p.name).charAt(0)}</div>
         <div>
           <div class="product-admin-name">${esc(p.name)}</div>
-          <div style="font-size:13px;color:var(--text-light);">${p.desc ? esc(p.desc) + ' · ' : ''}מלאי: ${p.stock}</div>
+          <div style="font-size:13px;color:var(--text-light);">${p.desc ? esc(p.desc) + ' · ' : ''}זמין: ${p.stock}</div>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:14px;">
@@ -791,27 +541,16 @@ function renderAdminProducts() {
       </div>
     </div>
   `).join('');
-
   document.getElementById('shareCard').style.display = 'block';
 }
 
-function esc(text) {
-  const d = document.createElement('div');
-  d.textContent = text;
-  return d.innerHTML;
-}
-
-function encode(data) {
-  return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-}
-
-function decode(str) {
-  return JSON.parse(decodeURIComponent(escape(atob(str))));
-}
+function esc(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+function encode(data) { return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }
+function decode(str) { return JSON.parse(decodeURIComponent(escape(atob(str)))); }
 
 function buildStoreData() {
   return {
-    s: document.getElementById('storeName').value.trim() || 'החנות שלי',
+    s: document.getElementById('storeName').value.trim() || 'התפריט שלי',
     ph: document.getElementById('sellerPhone').value.trim(),
     p: products.map(p => ({ n: p.name, pr: p.price, d: p.desc, st: p.stock }))
   };
@@ -835,43 +574,39 @@ function copyStoreLink() {
 
 function shareStoreWhatsApp() {
   if (products.length === 0) return;
-  const name = document.getElementById('storeName').value.trim() || 'החנות שלי';
+  const name = document.getElementById('storeName').value.trim() || 'התפריט שלי';
   const url = getStoreUrl();
-  const text = `🛍️ ${name}\n\nהיכנסו לחנות ובחרו מוצרים:\n${url}`;
+  const text = `🍽️ ${name}\n\nהיכנסו לתפריט והזמינו:\n${url}`;
   window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
 }
 
 function showToast(msg) {
   const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
+  toast.textContent = msg; toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
 // ===== STORE FRONT =====
-
 function renderStore(data) {
   storeData = data;
   document.getElementById('adminPage').style.display = 'none';
   document.getElementById('storePage').style.display = 'block';
-  document.getElementById('storeTitle').textContent = data.s || 'החנות שלי';
-  document.title = data.s || 'החנות שלי';
+  document.getElementById('storeTitle').textContent = data.s || 'התפריט שלי';
+  document.title = data.s || 'התפריט שלי';
 
-  const colors = ['color-1','color-2','color-3','color-4','color-5','color-6','color-7','color-8'];
+  const colors = ['food-1','food-2','food-3','food-4','food-5','food-6','food-7','food-8'];
   const grid = document.getElementById('productGrid');
 
   grid.innerHTML = data.p.map((p, i) => `
     <div class="product-card">
-      <div class="product-img ${colors[i % colors.length]}" style="color:#fff;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,0.15);">
+      <div class="product-img ${colors[i % colors.length]}">
         ${esc(p.n).charAt(0)}
       </div>
       <div class="product-body">
         <div class="product-name">${esc(p.n)}</div>
         ${p.d ? `<div class="product-desc">${esc(p.d)}</div>` : '<div class="product-desc"></div>'}
-        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px;">
-          <div class="product-price" style="margin-bottom:0;">₪${p.pr.toFixed(2)}</div>
-          <div style="font-size:12px;color:var(--text-muted);">מלאי: <span id="stock-${i}">${p.st}</span></div>
-        </div>
+        <div class="product-price">₪${p.pr.toFixed(2)}</div>
+        <div class="product-stock">זמין: ${p.st} מנות</div>
         <div class="qty-control">
           <button class="qty-btn" onclick="changeQty(${i}, -1)" id="minus-${i}" disabled>−</button>
           <div class="qty-display" id="qty-${i}">0</div>
@@ -886,7 +621,6 @@ function changeQty(index, delta) {
   if (!cart[index]) cart[index] = 0;
   const maxStock = storeData.p[index].st;
   cart[index] = Math.max(0, Math.min(maxStock, cart[index] + delta));
-
   const display = document.getElementById('qty-' + index);
   const minus = document.getElementById('minus-' + index);
   const plus = document.getElementById('plus-' + index);
@@ -894,62 +628,35 @@ function changeQty(index, delta) {
   display.className = 'qty-display' + (cart[index] > 0 ? ' has-items' : '');
   minus.disabled = cart[index] <= 0;
   plus.disabled = cart[index] >= maxStock;
-
   updateCart();
 }
 
 function updateCart() {
-  let totalItems = 0;
-  let totalPrice = 0;
-
+  let totalItems = 0, totalPrice = 0;
   Object.keys(cart).forEach(i => {
-    if (cart[i] > 0) {
-      totalItems += cart[i];
-      totalPrice += cart[i] * storeData.p[i].pr;
-    }
+    if (cart[i] > 0) { totalItems += cart[i]; totalPrice += cart[i] * storeData.p[i].pr; }
   });
-
   document.getElementById('cartCount').textContent = totalItems + ' פריטים';
   document.getElementById('cartTotal').textContent = '₪' + totalPrice.toFixed(2);
-
   const bar = document.getElementById('cartBar');
-  if (totalItems > 0) {
-    bar.classList.add('visible');
-  } else {
-    bar.classList.remove('visible');
-  }
+  totalItems > 0 ? bar.classList.add('visible') : bar.classList.remove('visible');
 }
 
 function openCheckout() {
   const summary = document.getElementById('orderSummary');
-  let html = '';
-  let total = 0;
-
+  let html = '', total = 0;
   Object.keys(cart).forEach(i => {
     if (cart[i] > 0) {
-      const p = storeData.p[i];
-      const lineTotal = cart[i] * p.pr;
-      total += lineTotal;
-      html += `
-        <div class="order-item">
-          <div>
-            <div class="order-item-name">${esc(p.n)}</div>
-            <div class="order-item-detail">₪${p.pr.toFixed(2)} × ${cart[i]}</div>
-          </div>
-          <div class="order-item-price">₪${lineTotal.toFixed(2)}</div>
-        </div>`;
+      const p = storeData.p[i]; const lineTotal = cart[i] * p.pr; total += lineTotal;
+      html += `<div class="order-item"><div><div class="order-item-name">${esc(p.n)}</div><div class="order-item-detail">₪${p.pr.toFixed(2)} × ${cart[i]}</div></div><div class="order-item-price">₪${lineTotal.toFixed(2)}</div></div>`;
     }
   });
-
   html += `<div class="order-total"><span>סה"כ</span><span>₪${total.toFixed(2)}</span></div>`;
   summary.innerHTML = html;
-
   document.getElementById('checkoutModal').classList.add('active');
 }
 
-function closeCheckout() {
-  document.getElementById('checkoutModal').classList.remove('active');
-}
+function closeCheckout() { document.getElementById('checkoutModal').classList.remove('active'); }
 
 async function sendOrder() {
   const name = document.getElementById('custName').value.trim();
@@ -957,42 +664,28 @@ async function sendOrder() {
   const notes = document.getElementById('custNotes').value.trim();
   const sendBtn = document.getElementById('sendBtn');
   const sendError = document.getElementById('sendError');
-
   if (!name) { shakeField('custName'); return; }
   if (!phone) { shakeField('custPhone'); return; }
-
-  sendBtn.disabled = true;
-  sendBtn.textContent = '⏳ שולח...';
-  sendError.style.display = 'none';
-
+  sendBtn.disabled = true; sendBtn.textContent = '⏳ שולח...'; sendError.style.display = 'none';
   let total = 0;
   let msg = `🛒 הזמנה חדשה!\n\n`;
-  msg += `👤 לקוח: ${name}\n`;
-  msg += `📞 טלפון: ${phone}\n`;
+  msg += `👤 לקוח: ${name}\n📞 טלפון: ${phone}\n`;
   if (notes) msg += `📝 הערות: ${notes}\n`;
-  msg += `\nפירוט ההזמנה:\n`;
-
+  msg += `\n🍽️ פירוט ההזמנה:\n`;
   Object.keys(cart).forEach(i => {
     if (cart[i] > 0) {
-      const p = storeData.p[i];
-      const lineTotal = cart[i] * p.pr;
-      total += lineTotal;
+      const p = storeData.p[i]; const lineTotal = cart[i] * p.pr; total += lineTotal;
       msg += `• ${p.n} × ${cart[i]} = ₪${lineTotal.toFixed(2)}\n`;
     }
   });
-
   msg += `\n💰 סה"כ לתשלום: ₪${total.toFixed(2)}`;
-
   const TG_TOKEN = '8149313950:AAGqx7pydz-sZRoDTVNG0GdQEzbthak4vq8';
   const TG_CHAT = '1776450087';
-
   try {
     const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: TG_CHAT, text: msg })
     });
-
     if (res.ok) {
       document.getElementById('checkoutModal').classList.remove('active');
       document.getElementById('successModal').classList.add('active');
@@ -1003,67 +696,40 @@ async function sendOrder() {
       document.getElementById('custName').value = '';
       document.getElementById('custPhone').value = '';
       document.getElementById('custNotes').value = '';
-    } else {
-      throw new Error('Send failed');
-    }
-  } catch (e) {
-    sendError.textContent = 'שגיאה בשליחה. נסה שוב.';
-    sendError.style.display = 'block';
-  }
-
-  sendBtn.disabled = false;
-  sendBtn.textContent = '📩 שלח הזמנה';
+    } else { throw new Error('fail'); }
+  } catch (e) { sendError.textContent = 'שגיאה בשליחה. נסה שוב.'; sendError.style.display = 'block'; }
+  sendBtn.disabled = false; sendBtn.textContent = '📩 שלח הזמנה';
 }
 
-function closeSuccess() {
-  document.getElementById('successModal').classList.remove('active');
-}
+function closeSuccess() { document.getElementById('successModal').classList.remove('active'); }
 
 function shakeField(id) {
   const el = document.getElementById(id);
-  el.style.borderColor = 'var(--danger)';
-  el.style.animation = 'shake 0.3s';
-  setTimeout(() => { el.style.borderColor = ''; el.style.animation = ''; }, 400);
-  el.focus();
+  el.style.borderColor = 'var(--danger)'; el.style.animation = 'shake 0.3s';
+  setTimeout(() => { el.style.borderColor = ''; el.style.animation = ''; }, 400); el.focus();
 }
 
 // ===== INIT =====
 (function init() {
-  // Key listeners for admin
   ['pName','pPrice','pStock','pDesc'].forEach(id => {
     document.getElementById(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') addProduct(); });
   });
-
-  // Check if store view
   const hash = window.location.hash;
   if (hash.startsWith('#store=')) {
     try {
       const data = decode(hash.substring(7));
-      if (data && data.p && data.p.length > 0) {
-        renderStore(data);
-        return;
-      }
-    } catch (e) {
-      console.error('Invalid store data');
-    }
+      if (data && data.p && data.p.length > 0) { renderStore(data); return; }
+    } catch (e) { console.error('Invalid store data'); }
   }
-
-  // Load saved data
   try {
     const saved = localStorage.getItem('myStoreData');
     if (saved) {
       const data = JSON.parse(saved);
       if (data.storeName) document.getElementById('storeName').value = data.storeName;
       if (data.sellerPhone) document.getElementById('sellerPhone').value = data.sellerPhone;
-      if (data.products) {
-        products = data.products;
-        renderAdminProducts();
-        updateShareLink();
-      }
+      if (data.products) { products = data.products; renderAdminProducts(); updateShareLink(); }
     }
   } catch(e) {}
-
-  // Auto-save
   setInterval(() => {
     try {
       localStorage.setItem('myStoreData', JSON.stringify({
@@ -1075,7 +741,6 @@ function shakeField(id) {
   }, 2000);
 })();
 
-// Shake animation
 const style = document.createElement('style');
 style.textContent = '@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }';
 document.head.appendChild(style);

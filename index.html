@@ -533,7 +533,7 @@ body {
 .modal .form-group { margin-bottom: 14px; }
 
 .btn-send-order {
-  background: linear-gradient(135deg, #25d366, #128C7E);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: #fff;
   border: none;
   width: 100%;
@@ -547,7 +547,8 @@ body {
   box-shadow: 0 4px 15px rgba(37,211,102,0.3);
   margin-top: 8px;
 }
-.btn-send-order:hover { box-shadow: 0 6px 20px rgba(37,211,102,0.4); transform: translateY(-1px); }
+.btn-send-order:hover { box-shadow: 0 6px 20px rgba(108,92,231,0.4); transform: translateY(-1px); }
+.btn-send-order:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 .btn-close-modal {
   background: transparent;
@@ -708,8 +709,19 @@ body {
       <input class="form-input" type="text" id="custNotes" placeholder="בקשות מיוחדות, מידות וכו׳" />
     </div>
 
-    <button class="btn-send-order" onclick="sendOrder()">📱 שלח הזמנה בוואטסאפ</button>
+    <button class="btn-send-order" id="sendBtn" onclick="sendOrder()">📩 שלח הזמנה</button>
+    <div id="sendError" style="display:none;color:var(--danger);text-align:center;margin-top:10px;font-size:14px;"></div>
     <button class="btn-close-modal" onclick="closeCheckout()">חזור לחנות</button>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal" style="text-align:center;">
+    <div style="font-size:64px;margin-bottom:16px;">✅</div>
+    <h2 style="color:var(--success);">ההזמנה נשלחה בהצלחה!</h2>
+    <p style="margin-top:12px;">ההזמנה שלך נשלחה למוכר. הוא ייצור איתך קשר בהקדם.</p>
+    <button class="btn-close-modal" onclick="closeSuccess()" style="margin-top:20px;">סגור</button>
   </div>
 </div>
 
@@ -939,20 +951,26 @@ function closeCheckout() {
   document.getElementById('checkoutModal').classList.remove('active');
 }
 
-function sendOrder() {
+async function sendOrder() {
   const name = document.getElementById('custName').value.trim();
   const phone = document.getElementById('custPhone').value.trim();
   const notes = document.getElementById('custNotes').value.trim();
+  const sendBtn = document.getElementById('sendBtn');
+  const sendError = document.getElementById('sendError');
 
   if (!name) { shakeField('custName'); return; }
   if (!phone) { shakeField('custPhone'); return; }
 
+  sendBtn.disabled = true;
+  sendBtn.textContent = '⏳ שולח...';
+  sendError.style.display = 'none';
+
   let total = 0;
-  let msg = `🛒 *הזמנה חדשה!*\n\n`;
-  msg += `👤 *לקוח:* ${name}\n`;
-  msg += `📞 *טלפון:* ${phone}\n`;
-  if (notes) msg += `📝 *הערות:* ${notes}\n`;
-  msg += `\n*פירוט ההזמנה:*\n`;
+  let msg = `🛒 הזמנה חדשה!\n\n`;
+  msg += `👤 לקוח: ${name}\n`;
+  msg += `📞 טלפון: ${phone}\n`;
+  if (notes) msg += `📝 הערות: ${notes}\n`;
+  msg += `\nפירוט ההזמנה:\n`;
 
   Object.keys(cart).forEach(i => {
     if (cart[i] > 0) {
@@ -963,12 +981,42 @@ function sendOrder() {
     }
   });
 
-  msg += `\n💰 *סה"כ לתשלום: ₪${total.toFixed(2)}*`;
+  msg += `\n💰 סה"כ לתשלום: ₪${total.toFixed(2)}`;
 
-  let waPhone = storeData.ph.replace(/[^0-9+]/g, '');
-  if (waPhone.startsWith('0')) waPhone = '972' + waPhone.substring(1);
+  const TG_TOKEN = '8149313950:AAGqx7pydz-sZRoDTVNG0GdQEzbthak4vq8';
+  const TG_CHAT = '1776450087';
 
-  window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TG_CHAT, text: msg })
+    });
+
+    if (res.ok) {
+      document.getElementById('checkoutModal').classList.remove('active');
+      document.getElementById('successModal').classList.add('active');
+      cart = {};
+      document.querySelectorAll('.qty-display').forEach(el => { el.textContent = '0'; el.className = 'qty-display'; });
+      document.querySelectorAll('.qty-btn').forEach(el => { if (el.id.startsWith('minus-')) el.disabled = true; if (el.id.startsWith('plus-')) el.disabled = false; });
+      updateCart();
+      document.getElementById('custName').value = '';
+      document.getElementById('custPhone').value = '';
+      document.getElementById('custNotes').value = '';
+    } else {
+      throw new Error('Send failed');
+    }
+  } catch (e) {
+    sendError.textContent = 'שגיאה בשליחה. נסה שוב.';
+    sendError.style.display = 'block';
+  }
+
+  sendBtn.disabled = false;
+  sendBtn.textContent = '📩 שלח הזמנה';
+}
+
+function closeSuccess() {
+  document.getElementById('successModal').classList.remove('active');
 }
 
 function shakeField(id) {

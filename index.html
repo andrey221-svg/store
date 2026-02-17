@@ -662,13 +662,13 @@ function previewImage(event) {
     const img = new Image();
     img.onload = function() {
       const canvas = document.createElement('canvas');
-      const MAX = 300;
+      const MAX = 150;
       let w = img.width, h = img.height;
-      if (w > h) { if (w > MAX) { h = h * MAX / w; w = MAX; } }
-      else { if (h > MAX) { w = w * MAX / h; h = MAX; } }
+      if (w > h) { h = h * MAX / w; w = MAX; }
+      else { w = w * MAX / h; h = MAX; }
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      currentImageData = canvas.toDataURL('image/jpeg', 0.6);
+      currentImageData = canvas.toDataURL('image/jpeg', 0.3);
       const area = document.getElementById('imgUploadArea');
       area.innerHTML = `<img src="${currentImageData}" /><input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" />`;
       area.classList.add('has-image');

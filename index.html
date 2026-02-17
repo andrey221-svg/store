@@ -3,31 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>התפריט שלי</title>
+<title>Daniely Private Chef</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary: #E85D26;
-  --primary-light: #FF8C5A;
-  --primary-dark: #C74B1A;
-  --accent: #2D2D2D;
-  --warm: #FFF8F0;
-  --warm2: #FFF1E6;
+  --burgundy: #722F37;
+  --burgundy-light: #8B3A42;
+  --burgundy-dark: #5A252C;
+  --gold: #C9A96E;
+  --gold-light: #D4BC8E;
+  --gold-dark: #B8944F;
+  --cream: #FDF8F0;
+  --cream2: #F7F0E4;
   --bg: #FAFAF7;
   --card: #ffffff;
   --text: #2D2D2D;
-  --text-light: #7A7A7A;
-  --text-muted: #BEBEBE;
-  --border: #F0EDE8;
-  --success: #4CAF50;
-  --danger: #E53935;
-  --gold: #F5A623;
-  --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
-  --shadow-md: 0 8px 30px rgba(0,0,0,0.1);
-  --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
-  --radius: 20px;
-  --radius-sm: 12px;
+  --text-light: #6B6B6B;
+  --text-muted: #AAAAAA;
+  --border: #EDE8DF;
+  --success: #4A7C59;
+  --danger: #C0392B;
+  --shadow-sm: 0 2px 15px rgba(114,47,55,0.06);
+  --shadow-md: 0 8px 30px rgba(114,47,55,0.1);
+  --shadow-lg: 0 20px 60px rgba(114,47,55,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -37,17 +38,25 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
+.elegant { font-family: 'Playfair Display', Georgia, serif; }
 
 /* ===== ADMIN ===== */
 .admin-page { padding: 20px; max-width: 900px; margin: 0 auto; }
-.admin-header { text-align: center; padding: 40px 20px; margin-bottom: 30px; }
-.admin-header h1 {
-  font-size: 36px; font-weight: 900;
-  background: linear-gradient(135deg, var(--primary), var(--gold));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 8px;
+.admin-header {
+  text-align: center; padding: 50px 20px 40px; margin-bottom: 30px;
+  background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-dark) 100%);
+  border-radius: var(--radius); position: relative; overflow: hidden;
 }
-.admin-header p { color: var(--text-light); font-size: 16px; }
+.admin-header::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 0L40 20L20 40L0 20z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.admin-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 700; color: var(--gold);
+  margin-bottom: 8px; position: relative;
+}
+.admin-header p { color: rgba(255,255,255,0.6); font-size: 15px; position: relative; }
 
 .setup-card {
   background: var(--card); border-radius: var(--radius);
@@ -55,104 +64,104 @@ body {
   box-shadow: var(--shadow-sm); border: 1px solid var(--border);
 }
 .setup-card h2 {
-  font-size: 18px; font-weight: 700; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 10px;
+  font-size: 17px; font-weight: 700; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px; color: var(--burgundy);
 }
 .setup-card h2 .icon {
   width: 36px; height: 36px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center; font-size: 18px;
 }
-.icon-orange { background: rgba(232,93,38,0.1); }
-.icon-green { background: rgba(76,175,80,0.1); }
-.icon-gold { background: rgba(245,166,35,0.1); }
+.icon-wine { background: rgba(114,47,55,0.08); }
+.icon-leaf { background: rgba(74,124,89,0.08); }
+.icon-gold { background: rgba(201,169,110,0.08); }
 
 .form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text-light); }
+.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-light); letter-spacing: 0.3px; }
 .form-input {
-  width: 100%; padding: 14px 16px;
-  border: 2px solid var(--border); border-radius: var(--radius-sm);
-  font-size: 16px; font-family: 'Heebo', sans-serif;
-  transition: all 0.3s; background: var(--warm); text-align: right;
+  width: 100%; padding: 13px 16px;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 15px; font-family: 'Heebo', sans-serif;
+  transition: all 0.3s; background: var(--cream); text-align: right;
 }
-.form-input:focus { outline: none; border-color: var(--primary-light); background: #fff; box-shadow: 0 0 0 4px rgba(232,93,38,0.1); }
+.form-input:focus { outline: none; border-color: var(--gold); background: #fff; box-shadow: 0 0 0 4px rgba(201,169,110,0.12); }
 .form-input::placeholder { color: var(--text-muted); }
 .form-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; align-items: end; }
 
 .btn {
-  padding: 14px 28px; border: none; border-radius: var(--radius-sm);
-  font-size: 16px; font-weight: 600; font-family: 'Heebo', sans-serif;
+  padding: 13px 28px; border: none; border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 600; font-family: 'Heebo', sans-serif;
   cursor: pointer; transition: all 0.3s;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
 }
 .btn:active { transform: scale(0.97); }
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff; box-shadow: 0 4px 15px rgba(232,93,38,0.3);
+  background: linear-gradient(135deg, var(--burgundy), var(--burgundy-dark));
+  color: var(--gold-light); box-shadow: 0 4px 15px rgba(114,47,55,0.25);
 }
-.btn-primary:hover { box-shadow: 0 6px 20px rgba(232,93,38,0.4); transform: translateY(-1px); }
-.btn-add { background: var(--primary); color: #fff; width: 100%; padding: 14px; font-size: 16px; margin-top: 8px; }
-.btn-add:hover { background: var(--primary-dark); }
+.btn-primary:hover { box-shadow: 0 6px 20px rgba(114,47,55,0.35); transform: translateY(-1px); }
+.btn-add {
+  background: linear-gradient(135deg, var(--burgundy), var(--burgundy-dark));
+  color: var(--gold-light); width: 100%; padding: 14px; font-size: 15px; margin-top: 8px;
+  box-shadow: 0 4px 15px rgba(114,47,55,0.2);
+}
+.btn-add:hover { box-shadow: 0 6px 20px rgba(114,47,55,0.35); transform: translateY(-1px); }
 .btn-whatsapp {
   background: linear-gradient(135deg, #25d366, #128C7E); color: #fff;
-  width: 100%; padding: 16px; font-size: 18px;
-  box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+  width: 100%; padding: 14px; font-size: 16px;
+  box-shadow: 0 4px 15px rgba(37,211,102,0.25);
 }
-.btn-whatsapp:hover { box-shadow: 0 6px 20px rgba(37,211,102,0.4); transform: translateY(-1px); }
+.btn-whatsapp:hover { box-shadow: 0 6px 20px rgba(37,211,102,0.35); transform: translateY(-1px); }
 
 .product-admin-list { margin-top: 20px; }
 .product-admin-item {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px; background: var(--warm); border-radius: var(--radius-sm);
+  padding: 14px; background: var(--cream); border-radius: var(--radius-sm);
   margin-bottom: 10px; border: 1px solid var(--border); transition: all 0.2s;
 }
-.product-admin-item:hover { border-color: var(--primary-light); }
+.product-admin-item:hover { border-color: var(--gold); }
 .product-admin-info { display: flex; align-items: center; gap: 14px; flex: 1; }
 .product-admin-img {
-  width: 50px; height: 50px; border-radius: 12px;
+  width: 50px; height: 50px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0; overflow: hidden;
+  font-size: 20px; flex-shrink: 0; overflow: hidden;
 }
 .product-admin-img img { width: 100%; height: 100%; object-fit: cover; }
+.product-admin-name { font-weight: 600; font-size: 14px; }
+.product-admin-price { color: var(--burgundy); font-weight: 700; font-size: 15px; }
+.btn-remove {
+  width: 34px; height: 34px; border-radius: 50%; border: none;
+  background: rgba(192,57,43,0.08); color: var(--danger);
+  cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+}
+.btn-remove:hover { background: rgba(192,57,43,0.15); }
+.empty-products { text-align: center; padding: 40px; color: var(--text-muted); }
+.empty-products .icon { font-size: 44px; margin-bottom: 12px; }
+
 .img-upload-area {
   border: 2px dashed var(--border); border-radius: var(--radius-sm);
   padding: 16px; text-align: center; cursor: pointer;
-  transition: all 0.3s; background: var(--warm); position: relative;
-  overflow: hidden;
+  transition: all 0.3s; background: var(--cream); position: relative; overflow: hidden;
 }
-.img-upload-area:hover { border-color: var(--primary-light); background: var(--warm2); }
+.img-upload-area:hover { border-color: var(--gold); background: var(--cream2); }
 .img-upload-area.has-image { border-style: solid; border-color: var(--success); padding: 0; }
-.img-upload-area img {
-  width: 100%; height: 120px; object-fit: cover; border-radius: 10px; display: block;
-}
-.img-upload-area .upload-text { color: var(--text-muted); font-size: 14px; }
-.img-upload-area .upload-icon { font-size: 28px; margin-bottom: 4px; }
-.img-upload-area input[type="file"] {
-  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-}
-.product-admin-name { font-weight: 600; }
-.product-admin-price { color: var(--primary); font-weight: 700; }
-.btn-remove {
-  width: 36px; height: 36px; border-radius: 50%; border: none;
-  background: rgba(229,57,53,0.1); color: var(--danger);
-  cursor: pointer; font-size: 18px;
-  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-}
-.btn-remove:hover { background: rgba(229,57,53,0.2); }
-.empty-products { text-align: center; padding: 40px; color: var(--text-muted); }
-.empty-products .icon { font-size: 48px; margin-bottom: 12px; }
+.img-upload-area img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; display: block; }
+.img-upload-area .upload-text { color: var(--text-muted); font-size: 13px; }
+.img-upload-area .upload-icon { font-size: 26px; margin-bottom: 4px; }
+.img-upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 
 .share-url {
-  background: var(--warm); border: 2px dashed var(--primary-light);
-  border-radius: var(--radius-sm); padding: 16px; margin: 16px 0;
-  word-break: break-all; font-size: 14px; color: var(--primary);
+  background: var(--cream); border: 1.5px dashed var(--gold);
+  border-radius: var(--radius-sm); padding: 14px; margin: 16px 0;
+  word-break: break-all; font-size: 13px; color: var(--burgundy);
   cursor: pointer; transition: all 0.2s; direction: ltr; text-align: center;
 }
-.share-url:hover { background: var(--warm2); }
+.share-url:hover { background: var(--cream2); }
 .copied-toast {
   position: fixed; bottom: 30px; left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: var(--accent); color: #fff; padding: 14px 28px;
-  border-radius: 50px; font-size: 15px; font-weight: 500; z-index: 1000;
+  background: var(--burgundy); color: var(--gold-light); padding: 14px 28px;
+  border-radius: 50px; font-size: 14px; font-weight: 500; z-index: 1000;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: var(--shadow-lg);
 }
@@ -160,179 +169,295 @@ body {
 
 /* ===== STORE FRONT ===== */
 .store-page { min-height: 100vh; background: var(--bg); }
-.store-logo {
-  width: 140px; height: 140px; margin: 0 auto 16px;
-}
+.store-logo { width: 120px; height: 120px; margin: 0 auto 20px; }
 .store-hero {
-  background: linear-gradient(135deg, var(--accent) 0%, #3D3D3D 100%);
-  padding: 50px 20px 70px; text-align: center;
+  background: linear-gradient(170deg, #1a1a1a 0%, #2D2D2D 40%, var(--burgundy-dark) 100%);
+  padding: 60px 20px 80px; text-align: center;
   position: relative; overflow: hidden;
 }
 .store-hero::before {
   content: ''; position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A96E' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.store-hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+.hero-divider {
+  width: 60px; height: 1px; background: var(--gold); margin: 0 auto 16px;
+  position: relative; opacity: 0.5;
 }
 .store-hero-badge {
-  display: inline-block; background: var(--primary); color: #fff;
-  padding: 6px 16px; border-radius: 50px; font-size: 13px; font-weight: 600;
-  margin-bottom: 14px; position: relative; letter-spacing: 0.5px;
+  display: inline-block; background: rgba(201,169,110,0.15);
+  color: var(--gold); border: 1px solid rgba(201,169,110,0.3);
+  padding: 5px 18px; border-radius: 50px; font-size: 12px; font-weight: 500;
+  margin-bottom: 20px; position: relative; letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 .store-hero h1 {
-  font-size: 42px; font-weight: 900; color: #fff;
-  position: relative; margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 44px; font-weight: 700; color: #fff;
+  position: relative; margin-bottom: 8px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
 }
+.store-hero h1 span { color: var(--gold); }
 .store-hero p {
-  color: rgba(255,255,255,0.7); font-size: 16px; position: relative;
-  max-width: 400px; margin: 0 auto;
+  color: rgba(255,255,255,0.5); font-size: 15px; position: relative;
+  max-width: 400px; margin: 0 auto; font-weight: 300; letter-spacing: 0.5px;
 }
 .store-content {
-  max-width: 900px; margin: -35px auto 0;
-  padding: 0 16px 130px; position: relative;
+  max-width: 960px; margin: -40px auto 0;
+  padding: 0 16px 140px; position: relative; z-index: 1;
 }
+.section-title {
+  text-align: center; margin-bottom: 28px;
+}
+.section-title h2 {
+  font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
+  color: var(--burgundy); margin-bottom: 4px;
+}
+.section-title p { color: var(--text-muted); font-size: 14px; }
+.section-title .line {
+  width: 40px; height: 2px; background: var(--gold); margin: 10px auto 0; border-radius: 2px;
+}
+
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 20px;
 }
 .product-card {
   background: var(--card); border-radius: var(--radius);
   overflow: hidden; box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border); transition: all 0.3s;
+  border: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex; flex-direction: column;
+  opacity: 0; transform: translateY(20px);
+  animation: cardIn 0.5s ease forwards;
 }
-.product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.product-card:nth-child(1) { animation-delay: 0.05s; }
+.product-card:nth-child(2) { animation-delay: 0.1s; }
+.product-card:nth-child(3) { animation-delay: 0.15s; }
+.product-card:nth-child(4) { animation-delay: 0.2s; }
+.product-card:nth-child(5) { animation-delay: 0.25s; }
+.product-card:nth-child(6) { animation-delay: 0.3s; }
+.product-card:nth-child(7) { animation-delay: 0.35s; }
+.product-card:nth-child(8) { animation-delay: 0.4s; }
+@keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+.product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
 .product-img {
-  height: 160px; display: flex; align-items: center;
-  justify-content: center; font-size: 20px; font-weight: 800;
+  height: 180px; display: flex; align-items: center;
+  justify-content: center; font-size: 22px; font-weight: 800;
   position: relative; overflow: hidden; color: #fff;
   letter-spacing: 1px;
 }
-.product-img img { width: 100%; height: 100%; object-fit: cover; }
-.product-body {
-  padding: 20px; flex: 1; display: flex; flex-direction: column;
+.product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.product-card:hover .product-img img { transform: scale(1.05); }
+.product-img .letter-bg {
+  width: 100%; height: 100%; display: flex; align-items: center;
+  justify-content: center; font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.9);
 }
-.product-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--accent); }
-.product-desc { font-size: 13px; color: var(--text-light); margin-bottom: 16px; flex: 1; line-height: 1.5; }
-.product-price { font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 4px; }
-.product-stock { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+.product-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+.product-name {
+  font-size: 17px; font-weight: 700; margin-bottom: 6px; color: var(--text);
+  font-family: 'Heebo', sans-serif;
+}
+.product-desc {
+  font-size: 13px; color: var(--text-light); margin-bottom: 16px;
+  flex: 1; line-height: 1.6; font-weight: 300;
+}
+.product-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.product-price {
+  font-size: 22px; font-weight: 800; color: var(--burgundy);
+  font-family: 'Heebo', sans-serif;
+}
+.product-price span { font-size: 14px; font-weight: 400; color: var(--text-muted); }
+.product-stock {
+  font-size: 11px; color: var(--text-muted); background: var(--cream);
+  padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border);
+}
 .qty-control {
   display: flex; align-items: center; gap: 0;
-  background: var(--warm); border-radius: var(--radius-sm);
-  overflow: hidden; border: 2px solid var(--border);
+  background: var(--cream); border-radius: var(--radius-sm);
+  overflow: hidden; border: 1.5px solid var(--border);
+  transition: border-color 0.3s;
 }
+.qty-control.active { border-color: var(--burgundy); }
 .qty-btn {
-  width: 48px; height: 48px; border: none; background: transparent;
-  font-size: 22px; font-weight: 700; cursor: pointer; color: var(--primary);
+  width: 46px; height: 44px; border: none; background: transparent;
+  font-size: 20px; font-weight: 700; cursor: pointer; color: var(--burgundy);
   transition: all 0.2s; display: flex; align-items: center; justify-content: center;
 }
-.qty-btn:hover { background: rgba(232,93,38,0.1); }
+.qty-btn:hover { background: rgba(114,47,55,0.06); }
 .qty-btn:disabled { color: var(--text-muted); cursor: default; }
 .qty-btn:disabled:hover { background: transparent; }
-.qty-display { flex: 1; text-align: center; font-size: 20px; font-weight: 700; color: var(--text); min-width: 40px; }
-.qty-display.has-items { color: var(--primary); }
+.qty-display {
+  flex: 1; text-align: center; font-size: 18px; font-weight: 700;
+  color: var(--text); min-width: 40px;
+}
+.qty-display.has-items { color: var(--burgundy); }
 
-/* Cart Bar */
+/* Cart Bar - Glass */
 .cart-bar {
   position: fixed; bottom: 0; left: 0; right: 0;
-  background: var(--accent); padding: 0; z-index: 100;
+  background: rgba(26,26,26,0.92); backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0; z-index: 100;
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 -8px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(201,169,110,0.15);
 }
 .cart-bar.visible { transform: translateY(0); }
 .cart-bar-inner {
-  max-width: 900px; margin: 0 auto; padding: 16px 20px;
+  max-width: 960px; margin: 0 auto; padding: 16px 20px;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .cart-info { display: flex; flex-direction: column; }
-.cart-count { font-size: 13px; color: rgba(255,255,255,0.6); }
-.cart-total { font-size: 24px; font-weight: 800; color: #fff; }
+.cart-count { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+.cart-total { font-size: 24px; font-weight: 800; color: var(--gold); }
 .btn-checkout {
-  background: var(--primary); color: #fff; border: none;
-  padding: 14px 32px; border-radius: var(--radius-sm);
-  font-size: 16px; font-weight: 700; font-family: 'Heebo', sans-serif;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: var(--burgundy-dark); border: none;
+  padding: 13px 30px; border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 700; font-family: 'Heebo', sans-serif;
   cursor: pointer; transition: all 0.3s; white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(201,169,110,0.3);
 }
-.btn-checkout:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.btn-checkout:hover { box-shadow: 0 6px 20px rgba(201,169,110,0.5); transform: translateY(-1px); }
 
 /* Modal */
 .modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px); z-index: 200;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
   display: flex; align-items: center; justify-content: center;
   padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s;
 }
 .modal-overlay.active { opacity: 1; pointer-events: all; }
 .modal {
   background: var(--card); border-radius: var(--radius);
-  padding: 32px; width: 100%; max-width: 480px;
+  padding: 32px; width: 100%; max-width: 460px;
   box-shadow: var(--shadow-lg);
   transform: scale(0.9) translateY(20px); transition: transform 0.3s;
   max-height: 90vh; overflow-y: auto;
+  border: 1px solid var(--border);
 }
 .modal-overlay.active .modal { transform: scale(1) translateY(0); }
-.modal h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
-.modal p { color: var(--text-light); margin-bottom: 24px; }
+.modal-header { text-align: center; margin-bottom: 24px; }
+.modal-header .modal-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(114,47,55,0.08); color: var(--burgundy);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin: 0 auto 14px;
+}
+.modal-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; font-weight: 700; color: var(--burgundy); margin-bottom: 4px;
+}
+.modal-header p { color: var(--text-muted); font-size: 14px; }
 .order-summary {
-  background: var(--warm); border-radius: var(--radius-sm);
+  background: var(--cream); border-radius: var(--radius-sm);
   padding: 16px; margin-bottom: 20px; border: 1px solid var(--border);
 }
-.order-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
-.order-item:last-child { border-bottom: none; }
-.order-item-name { font-weight: 600; }
-.order-item-detail { color: var(--text-light); font-size: 14px; }
-.order-item-price { font-weight: 700; color: var(--primary); }
+.order-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.order-item:last-of-type { border-bottom: none; }
+.order-item-name { font-weight: 600; font-size: 14px; }
+.order-item-detail { color: var(--text-light); font-size: 13px; }
+.order-item-price { font-weight: 700; color: var(--burgundy); font-size: 15px; }
 .order-total {
   display: flex; justify-content: space-between;
-  padding-top: 12px; margin-top: 8px; border-top: 2px solid var(--primary);
-  font-size: 20px; font-weight: 800;
+  padding-top: 14px; margin-top: 10px; border-top: 2px solid var(--burgundy);
+  font-size: 18px; font-weight: 800;
 }
-.order-total span:last-child { color: var(--primary); }
+.order-total span:last-child { color: var(--burgundy); }
 .modal .form-group { margin-bottom: 14px; }
+.modal .form-group label { display: flex; align-items: center; gap: 6px; }
 .btn-send-order {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff; border: none; width: 100%; padding: 16px;
-  border-radius: var(--radius-sm); font-size: 18px; font-weight: 700;
+  background: linear-gradient(135deg, var(--burgundy), var(--burgundy-dark));
+  color: var(--gold-light); border: none; width: 100%; padding: 15px;
+  border-radius: var(--radius-sm); font-size: 16px; font-weight: 700;
   font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(232,93,38,0.3); margin-top: 8px;
+  box-shadow: 0 4px 15px rgba(114,47,55,0.25); margin-top: 8px;
+  letter-spacing: 0.5px;
 }
-.btn-send-order:hover { box-shadow: 0 6px 20px rgba(232,93,38,0.4); transform: translateY(-1px); }
-.btn-send-order:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-send-order:hover { box-shadow: 0 6px 20px rgba(114,47,55,0.4); transform: translateY(-1px); }
+.btn-send-order:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .btn-close-modal {
-  background: transparent; border: 2px solid var(--border); color: var(--text-light);
+  background: transparent; border: 1.5px solid var(--border); color: var(--text-light);
   width: 100%; padding: 12px; border-radius: var(--radius-sm);
-  font-size: 15px; font-weight: 600; font-family: 'Heebo', sans-serif;
+  font-size: 14px; font-weight: 600; font-family: 'Heebo', sans-serif;
   cursor: pointer; margin-top: 10px; transition: all 0.2s;
 }
-.btn-close-modal:hover { border-color: var(--primary-light); color: var(--primary); }
+.btn-close-modal:hover { border-color: var(--burgundy); color: var(--burgundy); }
 
-/* Food colors */
-.food-1 { background: linear-gradient(135deg, #E85D26, #FF8C5A); }
-.food-2 { background: linear-gradient(135deg, #D4A373, #E6C9A8); }
-.food-3 { background: linear-gradient(135deg, #4CAF50, #81C784); }
-.food-4 { background: linear-gradient(135deg, #F5A623, #FFCC02); }
-.food-5 { background: linear-gradient(135deg, #E53935, #FF7043); }
-.food-6 { background: linear-gradient(135deg, #8D6E63, #A1887F); }
-.food-7 { background: linear-gradient(135deg, #FF7043, #FFAB91); }
-.food-8 { background: linear-gradient(135deg, #66BB6A, #A5D6A7); }
+/* Success Modal */
+.success-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--success), #5A9C6B);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 36px; margin: 0 auto 20px;
+  box-shadow: 0 8px 25px rgba(74,124,89,0.3);
+}
+.success-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 700; color: var(--success); margin-bottom: 8px;
+}
+
+/* Food Gradients */
+.food-1 { background: linear-gradient(135deg, var(--burgundy), var(--burgundy-light)); }
+.food-2 { background: linear-gradient(135deg, #8B6E4E, #A88B6A); }
+.food-3 { background: linear-gradient(135deg, #4A7C59, #6B9E78); }
+.food-4 { background: linear-gradient(135deg, var(--gold-dark), var(--gold)); }
+.food-5 { background: linear-gradient(135deg, #A0522D, #C0724D); }
+.food-6 { background: linear-gradient(135deg, #6B5B4E, #8B7B6E); }
+.food-7 { background: linear-gradient(135deg, #8B4513, #A0623D); }
+.food-8 { background: linear-gradient(135deg, #556B2F, #7B8B4F); }
+
+/* Footer */
+.store-footer {
+  text-align: center; padding: 30px 20px 20px;
+  color: var(--text-muted); font-size: 12px;
+  border-top: 1px solid var(--border); margin-top: -100px;
+  position: relative; z-index: 0;
+}
+.store-footer .footer-brand {
+  font-family: 'Playfair Display', serif; font-size: 16px;
+  color: var(--burgundy); margin-bottom: 4px; font-weight: 600;
+}
 
 @media (max-width: 600px) {
   .form-row { grid-template-columns: 1fr; }
-  .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .product-img { height: 110px; font-size: 16px; }
+  .product-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .product-img { height: 120px; }
+  .product-img .letter-bg { font-size: 36px; }
   .product-body { padding: 14px; }
-  .product-name { font-size: 15px; }
-  .product-price { font-size: 20px; }
-  .store-hero h1 { font-size: 30px; }
-  .store-hero { padding: 40px 20px 60px; }
-  .btn-checkout { padding: 12px 20px; font-size: 15px; }
+  .product-name { font-size: 14px; }
+  .product-price { font-size: 18px; }
+  .product-desc { font-size: 12px; margin-bottom: 10px; }
+  .product-meta { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .store-hero h1 { font-size: 32px; }
+  .store-hero { padding: 45px 20px 70px; }
+  .store-logo { width: 90px; height: 90px; }
+  .btn-checkout { padding: 12px 20px; font-size: 14px; }
   .modal { padding: 24px 18px; }
-  .admin-header h1 { font-size: 28px; }
-  .qty-btn { width: 40px; height: 40px; }
+  .admin-header h1 { font-size: 26px; }
+  .qty-btn { width: 38px; height: 38px; font-size: 18px; }
+  .qty-display { font-size: 16px; }
+  .section-title h2 { font-size: 22px; }
 }
 @media (max-width: 380px) {
   .product-grid { grid-template-columns: 1fr; }
 }
+
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
 </style>
 </head>
 <body>
@@ -340,61 +465,61 @@ body {
 <!-- ===== ADMIN PAGE ===== -->
 <div id="adminPage" class="admin-page">
   <div class="admin-header">
-    <div class="store-logo" style="margin-bottom:16px;">
+    <div class="store-logo" style="margin-bottom:12px;">
       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="90" fill="none" stroke="#722F37" stroke-width="3" opacity="0.3"/>
-        <circle cx="100" cy="100" r="85" fill="none" stroke="#722F37" stroke-width="1.5" opacity="0.2"/>
-        <ellipse cx="100" cy="100" rx="88" ry="86" fill="none" stroke="#722F37" stroke-width="2" opacity="0.25"/>
-        <circle cx="30" cy="80" r="8" fill="#722F37" opacity="0.12"/>
-        <circle cx="170" cy="75" r="6" fill="#722F37" opacity="0.1"/>
-        <circle cx="25" cy="110" r="5" fill="#722F37" opacity="0.08"/>
-        <circle cx="172" cy="120" r="7" fill="#722F37" opacity="0.1"/>
-        <circle cx="100" cy="100" r="78" fill="#722F37" opacity="0.06"/>
-        <g transform="translate(82, 28) scale(0.38)" fill="#722F37" opacity="0.6">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#C9A96E" stroke-width="2" opacity="0.4"/>
+        <circle cx="100" cy="100" r="85" fill="none" stroke="#C9A96E" stroke-width="1" opacity="0.2"/>
+        <ellipse cx="100" cy="100" rx="88" ry="86" fill="none" stroke="#C9A96E" stroke-width="1.5" opacity="0.25"/>
+        <circle cx="30" cy="80" r="8" fill="#C9A96E" opacity="0.08"/>
+        <circle cx="170" cy="75" r="6" fill="#C9A96E" opacity="0.06"/>
+        <circle cx="25" cy="110" r="5" fill="#C9A96E" opacity="0.05"/>
+        <circle cx="172" cy="120" r="7" fill="#C9A96E" opacity="0.06"/>
+        <circle cx="100" cy="100" r="78" fill="#C9A96E" opacity="0.04"/>
+        <g transform="translate(82, 28) scale(0.38)" fill="#C9A96E" opacity="0.5">
           <path d="M48 0C36 0 20 30 20 50c0 16 10 28 24 32v30H28c-2 0-4 2-4 4s2 4 4 4h40c2 0 4-2 4-4s-2-4-4-4H52V82c14-4 24-16 24-32C76 30 60 0 48 0z"/>
         </g>
-        <text x="100" y="105" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" font-weight="700" fill="#722F37" letter-spacing="1">Daniely</text>
-        <text x="100" y="130" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="14" fill="#722F37" letter-spacing="3" font-weight="400">PRIVATE CHEF</text>
-        <line x1="45" y1="138" x2="80" y2="138" stroke="#722F37" stroke-width="0.8" opacity="0.4"/>
-        <line x1="120" y1="138" x2="155" y2="138" stroke="#722F37" stroke-width="0.8" opacity="0.4"/>
-        <circle cx="100" cy="138" r="2" fill="#722F37" opacity="0.4"/>
+        <text x="100" y="105" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-size="30" font-style="italic" font-weight="700" fill="#C9A96E" letter-spacing="1">Daniely</text>
+        <text x="100" y="130" text-anchor="middle" font-family="Heebo, sans-serif" font-size="12" fill="#C9A96E" letter-spacing="4" font-weight="300">PRIVATE CHEF</text>
+        <line x1="45" y1="138" x2="80" y2="138" stroke="#C9A96E" stroke-width="0.6" opacity="0.3"/>
+        <line x1="120" y1="138" x2="155" y2="138" stroke="#C9A96E" stroke-width="0.6" opacity="0.3"/>
+        <circle cx="100" cy="138" r="1.5" fill="#C9A96E" opacity="0.3"/>
       </svg>
     </div>
-    <h1>🍽️ הגדרת התפריט שלך</h1>
-    <p>הוסף מנות, קבע מחירים, ושתף את הקישור עם הלקוחות</p>
+    <h1>הגדרת התפריט</h1>
+    <p>הוסף מנות, קבע מחירים, ושתף עם הלקוחות</p>
   </div>
 
   <div class="setup-card">
-    <h2><span class="icon icon-orange">🏷️</span> פרטי העסק</h2>
+    <h2><span class="icon icon-wine">🏷️</span> פרטי העסק</h2>
     <div class="form-group">
       <label>שם העסק</label>
-      <input class="form-input" type="text" id="storeName" placeholder="למשל: המטבח של אנדריי" />
+      <input class="form-input" type="text" id="storeName" placeholder="למשל: Daniely Private Chef" />
     </div>
     <div class="form-group">
-      <label>מספר וואטסאפ שלך (לקבלת הזמנות)</label>
+      <label>מספר וואטסאפ (לקבלת הזמנות)</label>
       <input class="form-input" type="tel" id="sellerPhone" placeholder="050-1234567" dir="ltr" style="text-align:left;" />
     </div>
   </div>
 
   <div class="setup-card">
-    <h2><span class="icon icon-green">🍳</span> הוספת מנות</h2>
+    <h2><span class="icon icon-leaf">🍳</span> הוספת מנות</h2>
     <div class="form-row">
       <div class="form-group">
         <label>שם המנה</label>
-        <input class="form-input" type="text" id="pName" placeholder="למשל: חומוס עם פטרוזיליה" />
+        <input class="form-input" type="text" id="pName" placeholder="למשל: פילה בקר עם ירקות צלויים" />
       </div>
       <div class="form-group">
         <label>מחיר (₪)</label>
-        <input class="form-input" type="number" id="pPrice" placeholder="35" min="0" step="0.5" dir="ltr" style="text-align:center;" />
+        <input class="form-input" type="number" id="pPrice" placeholder="120" min="0" step="0.5" dir="ltr" style="text-align:center;" />
       </div>
       <div class="form-group">
         <label>מנות זמינות</label>
-        <input class="form-input" type="number" id="pStock" placeholder="20" min="1" step="1" dir="ltr" style="text-align:center;" />
+        <input class="form-input" type="number" id="pStock" placeholder="10" min="1" step="1" dir="ltr" style="text-align:center;" />
       </div>
     </div>
     <div class="form-group">
       <label>תיאור (לא חובה)</label>
-      <input class="form-input" type="text" id="pDesc" placeholder="למשל: מוגש עם פיתה חמה, טחינה ושמן זית" />
+      <input class="form-input" type="text" id="pDesc" placeholder="למשל: בישול בטמפרטורה נמוכה, רוטב יין אדום ועשבי תיבול" />
     </div>
     <div class="form-group">
       <label>תמונה של המנה (לא חובה)</label>
@@ -415,7 +540,7 @@ body {
 
   <div class="setup-card" id="shareCard" style="display:none;">
     <h2><span class="icon icon-gold">🔗</span> שיתוף התפריט</h2>
-    <p style="color:var(--text-light);margin-bottom:16px;">הלקוחות יבחרו מנות, ימלאו פרטים, וההזמנה תגיע אליך לטלגרם</p>
+    <p style="color:var(--text-light);margin-bottom:16px;font-size:14px;">הלקוחות יבחרו מנות, ימלאו פרטים, וההזמנה תגיע אליך לטלגרם</p>
     <div class="share-url" id="shareUrl" onclick="copyStoreLink()"></div>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-primary" style="flex:1;" onclick="copyStoreLink()">📋 העתק קישור</button>
@@ -429,36 +554,34 @@ body {
   <div class="store-hero">
     <div class="store-logo">
       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <!-- Wine stain circle -->
-        <circle cx="100" cy="100" r="90" fill="none" stroke="#722F37" stroke-width="3" opacity="0.3"/>
-        <circle cx="100" cy="100" r="85" fill="none" stroke="#722F37" stroke-width="1.5" opacity="0.2"/>
-        <ellipse cx="100" cy="100" rx="88" ry="86" fill="none" stroke="#722F37" stroke-width="2" opacity="0.25"/>
-        <!-- Wine stain splatter effect -->
-        <circle cx="30" cy="80" r="8" fill="#722F37" opacity="0.12"/>
-        <circle cx="170" cy="75" r="6" fill="#722F37" opacity="0.1"/>
-        <circle cx="25" cy="110" r="5" fill="#722F37" opacity="0.08"/>
-        <circle cx="172" cy="120" r="7" fill="#722F37" opacity="0.1"/>
-        <!-- Inner circle area -->
-        <circle cx="100" cy="100" r="78" fill="#722F37" opacity="0.06"/>
-        <!-- Wine glass icon -->
-        <g transform="translate(82, 28) scale(0.38)" fill="#722F37" opacity="0.6">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#C9A96E" stroke-width="2" opacity="0.4"/>
+        <circle cx="100" cy="100" r="85" fill="none" stroke="#C9A96E" stroke-width="1" opacity="0.2"/>
+        <ellipse cx="100" cy="100" rx="88" ry="86" fill="none" stroke="#C9A96E" stroke-width="1.5" opacity="0.25"/>
+        <circle cx="30" cy="80" r="8" fill="#C9A96E" opacity="0.08"/>
+        <circle cx="170" cy="75" r="6" fill="#C9A96E" opacity="0.06"/>
+        <circle cx="25" cy="110" r="5" fill="#C9A96E" opacity="0.05"/>
+        <circle cx="172" cy="120" r="7" fill="#C9A96E" opacity="0.06"/>
+        <circle cx="100" cy="100" r="78" fill="#C9A96E" opacity="0.04"/>
+        <g transform="translate(82, 28) scale(0.38)" fill="#C9A96E" opacity="0.5">
           <path d="M48 0C36 0 20 30 20 50c0 16 10 28 24 32v30H28c-2 0-4 2-4 4s2 4 4 4h40c2 0 4-2 4-4s-2-4-4-4H52V82c14-4 24-16 24-32C76 30 60 0 48 0z"/>
         </g>
-        <!-- "Daniely" text -->
-        <text x="100" y="105" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" font-weight="700" fill="#722F37" letter-spacing="1">Daniely</text>
-        <!-- "Private Chef" text -->
-        <text x="100" y="130" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="14" fill="#722F37" letter-spacing="3" font-weight="400">PRIVATE CHEF</text>
-        <!-- Decorative lines -->
-        <line x1="45" y1="138" x2="80" y2="138" stroke="#722F37" stroke-width="0.8" opacity="0.4"/>
-        <line x1="120" y1="138" x2="155" y2="138" stroke="#722F37" stroke-width="0.8" opacity="0.4"/>
-        <circle cx="100" cy="138" r="2" fill="#722F37" opacity="0.4"/>
+        <text x="100" y="105" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-size="30" font-style="italic" font-weight="700" fill="#C9A96E" letter-spacing="1">Daniely</text>
+        <text x="100" y="130" text-anchor="middle" font-family="Heebo, sans-serif" font-size="12" fill="#C9A96E" letter-spacing="4" font-weight="300">PRIVATE CHEF</text>
+        <line x1="45" y1="138" x2="80" y2="138" stroke="#C9A96E" stroke-width="0.6" opacity="0.3"/>
+        <line x1="120" y1="138" x2="155" y2="138" stroke="#C9A96E" stroke-width="0.6" opacity="0.3"/>
+        <circle cx="100" cy="138" r="1.5" fill="#C9A96E" opacity="0.3"/>
       </svg>
     </div>
-    <div class="store-hero-badge">📍 הזמנה אונליין</div>
-    <h1 id="storeTitle">התפריט שלי</h1>
-    <p id="storeSubtitle">בחרו מנות והזמינו ישירות</p>
+    <div class="store-hero-badge">הזמנה אונליין</div>
+    <h1 id="storeTitle">Daniely <span>Private Chef</span></h1>
+    <div class="hero-divider"></div>
+    <p id="storeSubtitle">בחרו מנות מהתפריט והזמינו ישירות</p>
   </div>
   <div class="store-content">
+    <div class="section-title">
+      <h2>התפריט</h2>
+      <div class="line"></div>
+    </div>
     <div class="product-grid" id="productGrid"></div>
   </div>
 
@@ -468,46 +591,55 @@ body {
         <span class="cart-count" id="cartCount">0 פריטים</span>
         <span class="cart-total" id="cartTotal">₪0</span>
       </div>
-      <button class="btn-checkout" onclick="openCheckout()">📩 שלח הזמנה</button>
+      <button class="btn-checkout" onclick="openCheckout()">המשך להזמנה ←</button>
     </div>
+  </div>
+
+  <div class="store-footer">
+    <div class="footer-brand">Daniely Private Chef</div>
+    <div>חוויה קולינרית פרטית</div>
   </div>
 </div>
 
 <!-- ===== CHECKOUT MODAL ===== -->
 <div class="modal-overlay" id="checkoutModal">
   <div class="modal">
-    <h2>🧾 סיכום הזמנה</h2>
-    <p>בדקו את ההזמנה ומלאו פרטים לשליחה</p>
+    <div class="modal-header">
+      <div class="modal-icon">🧾</div>
+      <h2>סיכום הזמנה</h2>
+      <p>בדקו את הפרטים ומלאו את הטופס</p>
+    </div>
     <div class="order-summary" id="orderSummary"></div>
     <div class="form-group">
-      <label>השם שלך *</label>
+      <label>👤 השם שלך *</label>
       <input class="form-input" type="text" id="custName" placeholder="השם המלא שלך" />
     </div>
     <div class="form-group">
-      <label>מספר טלפון *</label>
+      <label>📞 מספר טלפון *</label>
       <input class="form-input" type="tel" id="custPhone" placeholder="050-1234567" dir="ltr" style="text-align:left;" />
     </div>
     <div class="form-group">
-      <label>הערות (לא חובה)</label>
-      <input class="form-input" type="text" id="custNotes" placeholder="ללא בצל, תוספת חריף..." />
+      <label>📝 הערות (לא חובה)</label>
+      <input class="form-input" type="text" id="custNotes" placeholder="ללא בצל, תוספת חריף, אלרגיות..." />
     </div>
-    <button class="btn-send-order" id="sendBtn" onclick="sendOrder()">📩 שלח הזמנה</button>
-    <div id="sendError" style="display:none;color:var(--danger);text-align:center;margin-top:10px;font-size:14px;"></div>
-    <button class="btn-close-modal" onclick="closeCheckout()">חזרה לתפריט</button>
+    <button class="btn-send-order" id="sendBtn" onclick="sendOrder()">שלח הזמנה</button>
+    <div id="sendError" style="display:none;color:var(--danger);text-align:center;margin-top:10px;font-size:13px;"></div>
+    <button class="btn-close-modal" onclick="closeCheckout()">← חזרה לתפריט</button>
   </div>
 </div>
 
 <!-- Success Modal -->
 <div class="modal-overlay" id="successModal">
   <div class="modal" style="text-align:center;">
-    <div style="font-size:64px;margin-bottom:16px;">🎉</div>
-    <h2 style="color:var(--success);">ההזמנה נשלחה בהצלחה!</h2>
-    <p style="margin-top:12px;">ההזמנה שלך התקבלה. ניצור איתך קשר בהקדם. בתיאבון!</p>
-    <button class="btn-close-modal" onclick="closeSuccess()" style="margin-top:20px;">סגור</button>
+    <div class="success-icon">✓</div>
+    <div class="success-title">ההזמנה התקבלה!</div>
+    <p style="color:var(--text-light);margin-bottom:8px;font-size:15px;">ניצור איתך קשר בהקדם לאישור ותיאום.</p>
+    <p style="font-family:'Playfair Display',serif;font-size:20px;color:var(--burgundy);margin-bottom:20px;font-style:italic;">Bon Appétit!</p>
+    <button class="btn-close-modal" onclick="closeSuccess()" style="margin-top:0;">סגור</button>
   </div>
 </div>
 
-<div class="copied-toast" id="toast">✅ הקישור הועתק!</div>
+<div class="copied-toast" id="toast">✓ הקישור הועתק!</div>
 
 <script>
 let products = [];
@@ -520,7 +652,6 @@ function previewImage(event) {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = function(e) {
-    // Resize image to reduce data size
     const img = new Image();
     img.onload = function() {
       const canvas = document.createElement('canvas');
@@ -594,11 +725,11 @@ function renderAdminProducts() {
         </div>
         <div>
           <div class="product-admin-name">${esc(p.name)}</div>
-          <div style="font-size:13px;color:var(--text-light);">${p.desc ? esc(p.desc) + ' · ' : ''}זמין: ${p.stock}</div>
+          <div style="font-size:12px;color:var(--text-light);">${p.desc ? esc(p.desc) + ' · ' : ''}זמין: ${p.stock}</div>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:14px;">
-        <div class="product-admin-price">₪${p.price.toFixed(2)}</div>
+        <div class="product-admin-price">₪${p.price.toFixed(0)}</div>
         <button class="btn-remove" onclick="removeProduct(${p.id})">✕</button>
       </div>
     </div>
@@ -631,7 +762,7 @@ function updateShareLink() {
 function copyStoreLink() {
   if (products.length === 0) return;
   const url = getStoreUrl();
-  navigator.clipboard.writeText(url).then(() => showToast('✅ הקישור הועתק!')).catch(() => prompt('העתק:', url));
+  navigator.clipboard.writeText(url).then(() => showToast('✓ הקישור הועתק!')).catch(() => prompt('העתק:', url));
 }
 
 function shareStoreWhatsApp() {
@@ -653,8 +784,8 @@ function renderStore(data) {
   storeData = data;
   document.getElementById('adminPage').style.display = 'none';
   document.getElementById('storePage').style.display = 'block';
-  document.getElementById('storeTitle').textContent = data.s || 'התפריט שלי';
-  document.title = data.s || 'התפריט שלי';
+  document.getElementById('storeTitle').innerHTML = esc(data.s || 'התפריט שלי');
+  document.title = data.s || 'Daniely Private Chef';
 
   const colors = ['food-1','food-2','food-3','food-4','food-5','food-6','food-7','food-8'];
   const grid = document.getElementById('productGrid');
@@ -662,14 +793,16 @@ function renderStore(data) {
   grid.innerHTML = data.p.map((p, i) => `
     <div class="product-card">
       <div class="product-img ${p.im ? '' : colors[i % colors.length]}">
-        ${p.im ? `<img src="${p.im}" />` : esc(p.n).charAt(0)}
+        ${p.im ? `<img src="${p.im}" alt="${esc(p.n)}" />` : `<div class="letter-bg">${esc(p.n).charAt(0)}</div>`}
       </div>
       <div class="product-body">
         <div class="product-name">${esc(p.n)}</div>
         ${p.d ? `<div class="product-desc">${esc(p.d)}</div>` : '<div class="product-desc"></div>'}
-        <div class="product-price">₪${p.pr.toFixed(2)}</div>
-        <div class="product-stock">זמין: ${p.st} מנות</div>
-        <div class="qty-control">
+        <div class="product-meta">
+          <div class="product-price">₪${p.pr.toFixed(0)} <span></span></div>
+          <div class="product-stock">זמין: ${p.st}</div>
+        </div>
+        <div class="qty-control" id="qc-${i}">
           <button class="qty-btn" onclick="changeQty(${i}, -1)" id="minus-${i}" disabled>−</button>
           <div class="qty-display" id="qty-${i}">0</div>
           <button class="qty-btn" onclick="changeQty(${i}, 1)" id="plus-${i}">+</button>
@@ -686,10 +819,12 @@ function changeQty(index, delta) {
   const display = document.getElementById('qty-' + index);
   const minus = document.getElementById('minus-' + index);
   const plus = document.getElementById('plus-' + index);
+  const qc = document.getElementById('qc-' + index);
   display.textContent = cart[index];
   display.className = 'qty-display' + (cart[index] > 0 ? ' has-items' : '');
   minus.disabled = cart[index] <= 0;
   plus.disabled = cart[index] >= maxStock;
+  cart[index] > 0 ? qc.classList.add('active') : qc.classList.remove('active');
   updateCart();
 }
 
@@ -699,7 +834,7 @@ function updateCart() {
     if (cart[i] > 0) { totalItems += cart[i]; totalPrice += cart[i] * storeData.p[i].pr; }
   });
   document.getElementById('cartCount').textContent = totalItems + ' פריטים';
-  document.getElementById('cartTotal').textContent = '₪' + totalPrice.toFixed(2);
+  document.getElementById('cartTotal').textContent = '₪' + totalPrice.toFixed(0);
   const bar = document.getElementById('cartBar');
   totalItems > 0 ? bar.classList.add('visible') : bar.classList.remove('visible');
 }
@@ -710,10 +845,10 @@ function openCheckout() {
   Object.keys(cart).forEach(i => {
     if (cart[i] > 0) {
       const p = storeData.p[i]; const lineTotal = cart[i] * p.pr; total += lineTotal;
-      html += `<div class="order-item"><div><div class="order-item-name">${esc(p.n)}</div><div class="order-item-detail">₪${p.pr.toFixed(2)} × ${cart[i]}</div></div><div class="order-item-price">₪${lineTotal.toFixed(2)}</div></div>`;
+      html += `<div class="order-item"><div><div class="order-item-name">${esc(p.n)}</div><div class="order-item-detail">₪${p.pr.toFixed(0)} × ${cart[i]}</div></div><div class="order-item-price">₪${lineTotal.toFixed(0)}</div></div>`;
     }
   });
-  html += `<div class="order-total"><span>סה"כ</span><span>₪${total.toFixed(2)}</span></div>`;
+  html += `<div class="order-total"><span>סה"כ לתשלום</span><span>₪${total.toFixed(0)}</span></div>`;
   summary.innerHTML = html;
   document.getElementById('checkoutModal').classList.add('active');
 }
@@ -737,10 +872,10 @@ async function sendOrder() {
   Object.keys(cart).forEach(i => {
     if (cart[i] > 0) {
       const p = storeData.p[i]; const lineTotal = cart[i] * p.pr; total += lineTotal;
-      msg += `• ${p.n} × ${cart[i]} = ₪${lineTotal.toFixed(2)}\n`;
+      msg += `• ${p.n} × ${cart[i]} = ₪${lineTotal.toFixed(0)}\n`;
     }
   });
-  msg += `\n💰 סה"כ לתשלום: ₪${total.toFixed(2)}`;
+  msg += `\n💰 סה"כ לתשלום: ₪${total.toFixed(0)}`;
   const TG_TOKEN = '8149313950:AAGqx7pydz-sZRoDTVNG0GdQEzbthak4vq8';
   const TG_CHAT = '1776450087';
   try {
@@ -754,13 +889,14 @@ async function sendOrder() {
       cart = {};
       document.querySelectorAll('.qty-display').forEach(el => { el.textContent = '0'; el.className = 'qty-display'; });
       document.querySelectorAll('.qty-btn').forEach(el => { if (el.id.startsWith('minus-')) el.disabled = true; if (el.id.startsWith('plus-')) el.disabled = false; });
+      document.querySelectorAll('.qty-control').forEach(el => el.classList.remove('active'));
       updateCart();
       document.getElementById('custName').value = '';
       document.getElementById('custPhone').value = '';
       document.getElementById('custNotes').value = '';
     } else { throw new Error('fail'); }
   } catch (e) { sendError.textContent = 'שגיאה בשליחה. נסה שוב.'; sendError.style.display = 'block'; }
-  sendBtn.disabled = false; sendBtn.textContent = '📩 שלח הזמנה';
+  sendBtn.disabled = false; sendBtn.textContent = 'שלח הזמנה';
 }
 
 function closeSuccess() { document.getElementById('successModal').classList.remove('active'); }
@@ -802,10 +938,6 @@ function shakeField(id) {
     } catch(e) {}
   }, 2000);
 })();
-
-const style = document.createElement('style');
-style.textContent = '@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }';
-document.head.appendChild(style);
 </script>
 </body>
 </html>

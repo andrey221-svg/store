@@ -139,7 +139,7 @@ body {
 .empty-products .icon { font-size: 44px; margin-bottom: 12px; }
 
 .img-upload-area {
-  border: 2px dashed var(--border); border-radius: var(--radius-sm);
+  display: block; border: 2px dashed var(--border); border-radius: var(--radius-sm);
   padding: 16px; text-align: center; cursor: pointer;
   transition: all 0.3s; background: var(--cream); position: relative; overflow: hidden;
 }
@@ -148,7 +148,6 @@ body {
 .img-upload-area img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; display: block; }
 .img-upload-area .upload-text { color: var(--text-muted); font-size: 13px; }
 .img-upload-area .upload-icon { font-size: 26px; margin-bottom: 4px; }
-.img-upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 
 .share-url {
   background: var(--cream); border: 1.5px dashed var(--gold);
@@ -523,11 +522,11 @@ body {
     </div>
     <div class="form-group">
       <label>תמונה של המנה (לא חובה)</label>
-      <div class="img-upload-area" id="imgUploadArea" onclick="document.getElementById('pImage').click()">
+      <label class="img-upload-area" id="imgUploadArea" for="pImage">
         <div class="upload-icon">📷</div>
         <div class="upload-text">לחץ להעלאת תמונה</div>
-        <input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" />
-      </div>
+        <input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" />
+      </label>
     </div>
     <button class="btn btn-add" onclick="addProduct()">➕ הוסף מנה</button>
     <div class="product-admin-list" id="adminProductList">
@@ -671,7 +670,7 @@ function previewImage(event) {
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
       currentImageData = canvas.toDataURL('image/jpeg', 0.6);
       const area = document.getElementById('imgUploadArea');
-      area.innerHTML = `<img src="${currentImageData}" /><input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" />`;
+      area.innerHTML = `<img src="${currentImageData}" /><input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" />`;
       area.classList.add('has-image');
     };
     img.src = e.target.result;
@@ -682,8 +681,9 @@ function previewImage(event) {
 function clearImageUpload() {
   currentImageData = '';
   const area = document.getElementById('imgUploadArea');
-  area.innerHTML = '<div class="upload-icon">📷</div><div class="upload-text">לחץ להעלאת תמונה</div><input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" />';
+  area.innerHTML = '<div class="upload-icon">📷</div><div class="upload-text">לחץ להעלאת תמונה</div><input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" />';
   area.classList.remove('has-image');
+  area.setAttribute('for', 'pImage');
 }
 
 function addProduct() {

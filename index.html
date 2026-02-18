@@ -996,9 +996,10 @@ function initAdmin() {
 (async function init() {
   const isAdmin = window.location.search.includes('admin');
   const isLocal = window.location.protocol === 'file:';
+  const hasAdminData = !!localStorage.getItem('myStoreData');
 
-  // If explicitly admin mode or local file — show admin
-  if (isAdmin || isLocal) { initAdmin(); return; }
+  // If explicitly admin mode, local file, or this device has admin data — show admin
+  if (isAdmin || isLocal || hasAdminData) { initAdmin(); return; }
 
   // Try to load store data from data.json
   try {

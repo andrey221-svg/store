@@ -538,9 +538,11 @@ body {
   </div>
 
   <div class="setup-card" id="shareCard" style="display:none;">
-    <h2><span class="icon icon-gold">🔗</span> שיתוף התפריט</h2>
-    <p style="color:var(--text-light);margin-bottom:16px;font-size:14px;">הלקוחות יבחרו מנות, ימלאו פרטים, וההזמנה תגיע אליך לטלגרם</p>
-    <div class="share-url" id="shareUrl" onclick="copyStoreLink()"></div>
+    <h2><span class="icon icon-gold">🔗</span> פרסום ושיתוף</h2>
+    <p style="color:var(--text-light);margin-bottom:16px;font-size:14px;">פרסם את התפריט כדי שלקוחות יוכלו להזמין. ההזמנות יגיעו אליך לטלגרם.</p>
+    <button class="btn btn-add" id="publishBtn" onclick="publishStore()" style="margin-bottom:14px;background:linear-gradient(135deg, var(--success), #5A9C6B);color:#fff;">🚀 פרסם תפריט</button>
+    <div id="publishStatus" style="text-align:center;font-size:13px;margin-bottom:14px;display:none;"></div>
+    <div class="share-url" id="shareUrl" onclick="copyStoreLink()">https://andrey221-svg.github.io/store/</div>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-primary" style="flex:1;" onclick="copyStoreLink()">📋 העתק קישור</button>
       <button class="btn btn-whatsapp" style="flex:1;" onclick="shareStoreWhatsApp()">📱 שתף בוואטסאפ</button>
@@ -654,6 +656,17 @@ let cart = {};
 let storeData = null;
 let currentImageData = '';
 
+const GH_REPO = 'andrey221-svg/store';
+const GH_FILE = 'data.json';
+const STORE_URL = 'https://andrey221-svg.github.io/store/';
+
+function getGHToken() {
+  return localStorage.getItem('gh_token') || '';
+}
+function setGHToken(t) {
+  localStorage.setItem('gh_token', t);
+}
+
 function previewImage(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -662,13 +675,13 @@ function previewImage(event) {
     const img = new Image();
     img.onload = function() {
       const canvas = document.createElement('canvas');
-      const MAX = 150;
+      const MAX = 300;
       let w = img.width, h = img.height;
       if (w > h) { h = h * MAX / w; w = MAX; }
       else { w = w * MAX / h; h = MAX; }
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      currentImageData = canvas.toDataURL('image/jpeg', 0.3);
+      currentImageData = canvas.toDataURL('image/jpeg', 0.6);
       const area = document.getElementById('imgUploadArea');
       area.innerHTML = `<img src="${currentImageData}" /><input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" />`;
       area.classList.add('has-image');
@@ -695,7 +708,7 @@ function addProduct() {
   if (isNaN(price) || price <= 0) { shakeInput('pPrice'); return; }
   if (isNaN(stock) || stock <= 0) { shakeInput('pStock'); return; }
   products.push({ name, price, desc, stock, img: currentImageData, id: Date.now() });
-  renderAdminProducts(); updateShareLink();
+  renderAdminProducts();
   document.getElementById('pName').value = '';
   document.getElementById('pPrice').value = '';
   document.getElementById('pDesc').value = '';
@@ -714,7 +727,7 @@ function shakeInput(id) {
 
 function removeProduct(id) {
   products = products.filter(p => p.id !== id);
-  renderAdminProducts(); updateShareLink();
+  renderAdminProducts();
 }
 
 function renderAdminProducts() {
@@ -746,8 +759,6 @@ function renderAdminProducts() {
 }
 
 function esc(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
-function encode(data) { return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }
-function decode(str) { return JSON.parse(decodeURIComponent(escape(atob(str)))); }
 
 function buildStoreData() {
   return {
@@ -757,14 +768,56 @@ function buildStoreData() {
   };
 }
 
-function getStoreUrl() {
-  const data = buildStoreData();
-  return 'https://andrey221-svg.github.io/store/#store=' + encode(data);
+// ===== PUBLISH TO GITHUB =====
+async function publishStore() {
+  let token = getGHToken();
+  if (!token) {
+    token = prompt('הכנס את טוקן GitHub שלך (פעם אחת בלבד):');
+    if (!token) return;
+    setGHToken(token);
+  }
+  const btn = document.getElementById('publishBtn');
+  const status = document.getElementById('publishStatus');
+  btn.disabled = true; btn.textContent = '⏳ מפרסם...';
+  status.style.display = 'block'; status.style.color = 'var(--text-light)';
+  status.textContent = 'שומר את התפריט...';
+  try {
+    const data = buildStoreData();
+    const jsonStr = JSON.stringify(data);
+    const content = btoa(unescape(encodeURIComponent(jsonStr)));
+    // Get current file SHA if exists
+    let sha = '';
+    try {
+      const getRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, {
+        headers: { 'Authorization': `token ${token}` }
+      });
+      if (getRes.ok) { const f = await getRes.json(); sha = f.sha; }
+    } catch(e) {}
+    // Put file
+    const body = { message: 'Update menu data', content };
+    if (sha) body.sha = sha;
+    const putRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (putRes.ok) {
+      status.style.color = 'var(--success)';
+      status.textContent = '✓ התפריט פורסם בהצלחה! הלקוחות יראו את השינויים תוך דקה.';
+    } else {
+      const err = await putRes.json();
+      if (putRes.status === 401) { setGHToken(''); }
+      throw new Error(err.message || 'שגיאה');
+    }
+  } catch (e) {
+    status.style.color = 'var(--danger)';
+    status.textContent = '✕ שגיאה בפרסום: ' + e.message;
+  }
+  btn.disabled = false; btn.textContent = '🚀 פרסם תפריט';
 }
 
-function updateShareLink() {
-  if (products.length === 0) return;
-  document.getElementById('shareUrl').textContent = getStoreUrl();
+function getStoreUrl() {
+  return STORE_URL;
 }
 
 function copyStoreLink() {
@@ -916,24 +969,36 @@ function shakeField(id) {
 }
 
 // ===== INIT =====
-(function init() {
+(async function init() {
+  const isAdmin = window.location.search.includes('admin');
+
+  if (!isAdmin) {
+    // STORE MODE: load data.json and show store
+    try {
+      const res = await fetch('data.json?' + Date.now());
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.p && data.p.length > 0) { renderStore(data); return; }
+      }
+    } catch (e) { console.error('Could not load store data:', e); }
+    // If no data.json, show a "no menu" message
+    document.getElementById('adminPage').style.display = 'none';
+    document.getElementById('storePage').style.display = 'block';
+    document.getElementById('productGrid').innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);"><div style="font-size:48px;margin-bottom:16px;">🍽️</div><div style="font-size:18px;">התפריט עדיין לא פורסם</div><div style="font-size:14px;margin-top:8px;">בקרוב יהיו כאן מנות טעימות!</div></div>';
+    return;
+  }
+
+  // ADMIN MODE
   ['pName','pPrice','pStock','pDesc'].forEach(id => {
     document.getElementById(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') addProduct(); });
   });
-  const hash = window.location.hash;
-  if (hash.startsWith('#store=')) {
-    try {
-      const data = decode(hash.substring(7));
-      if (data && data.p && data.p.length > 0) { renderStore(data); return; }
-    } catch (e) { console.error('Invalid store data'); }
-  }
   try {
     const saved = localStorage.getItem('myStoreData');
     if (saved) {
       const data = JSON.parse(saved);
       if (data.storeName) document.getElementById('storeName').value = data.storeName;
       if (data.sellerPhone) document.getElementById('sellerPhone').value = data.sellerPhone;
-      if (data.products) { products = data.products.map(p => ({ ...p, img: p.img || '' })); renderAdminProducts(); updateShareLink(); }
+      if (data.products) { products = data.products.map(p => ({ ...p, img: p.img || '' })); renderAdminProducts(); }
     }
   } catch(e) {}
   setInterval(() => {

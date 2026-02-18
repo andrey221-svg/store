@@ -542,7 +542,7 @@ body {
     <p style="color:var(--text-light);margin-bottom:16px;font-size:14px;">פרסם את התפריט כדי שלקוחות יוכלו להזמין. ההזמנות יגיעו אליך לטלגרם.</p>
     <button class="btn btn-add" id="publishBtn" onclick="publishStore()" style="margin-bottom:14px;background:linear-gradient(135deg, var(--success), #5A9C6B);color:#fff;">🚀 פרסם תפריט</button>
     <div id="publishStatus" style="text-align:center;font-size:13px;margin-bottom:14px;display:none;"></div>
-    <div class="share-url" id="shareUrl" onclick="copyStoreLink()">https://andrey221-svg.github.io/store/</div>
+    <div class="share-url" id="shareUrl" onclick="copyStoreLink()">https://andrey221-svg.github.io/store/?store</div>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-primary" style="flex:1;" onclick="copyStoreLink()">📋 העתק קישור</button>
       <button class="btn btn-whatsapp" style="flex:1;" onclick="shareStoreWhatsApp()">📱 שתף בוואטסאפ</button>
@@ -658,7 +658,7 @@ let currentImageData = '';
 
 const GH_REPO = 'andrey221-svg/store';
 const GH_FILE = 'data.json';
-const STORE_URL = 'https://andrey221-svg.github.io/store/';
+const STORE_URL = 'https://andrey221-svg.github.io/store/?store';
 
 function getGHToken() {
   return localStorage.getItem('gh_token') || '';
@@ -995,11 +995,22 @@ function initAdmin() {
 
 (async function init() {
   const params = new URLSearchParams(window.location.search);
-  const isAdmin = params.has('admin');
   const isLocal = window.location.protocol === 'file:';
+  const isAdminUrl = params.has('admin');
+  const isStore = params.has('store');
+  const wasAdmin = localStorage.getItem('daniely_admin') === '1';
 
-  // ADMIN: only with ?admin in URL or local file
-  if (isAdmin || isLocal) { initAdmin(); return; }
+  // ?store always shows store (for customers)
+  // ?admin or local file or remembered admin device → admin
+  // no params: if was admin before → admin, otherwise → store
+  const showAdmin = isStore ? false : (isAdminUrl || isLocal || wasAdmin);
+
+  if (showAdmin) {
+    // Remember this device as admin
+    localStorage.setItem('daniely_admin', '1');
+    initAdmin();
+    return;
+  }
 
   // STORE: try to load data.json
   try {

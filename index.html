@@ -994,14 +994,14 @@ function initAdmin() {
 }
 
 (async function init() {
-  const isAdmin = window.location.search.includes('admin');
+  const params = new URLSearchParams(window.location.search);
+  const isAdmin = params.has('admin');
   const isLocal = window.location.protocol === 'file:';
-  const hasAdminData = !!localStorage.getItem('myStoreData');
 
-  // If explicitly admin mode, local file, or this device has admin data — show admin
-  if (isAdmin || isLocal || hasAdminData) { initAdmin(); return; }
+  // ADMIN: only with ?admin in URL or local file
+  if (isAdmin || isLocal) { initAdmin(); return; }
 
-  // Try to load store data from data.json
+  // STORE: try to load data.json
   try {
     const res = await fetch('data.json?' + Date.now());
     if (res.ok) {
@@ -1010,7 +1010,7 @@ function initAdmin() {
     }
   } catch (e) { console.error('Could not load store data:', e); }
 
-  // No data.json found — show "menu not published" message
+  // No data — show "menu not published" message
   document.getElementById('adminPage').style.display = 'none';
   document.getElementById('storePage').style.display = 'block';
   document.getElementById('productGrid').innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);"><div style="font-size:48px;margin-bottom:16px;">🍽️</div><div style="font-size:18px;">התפריט עדיין לא פורסם</div><div style="font-size:14px;margin-top:8px;">בקרוב יהיו כאן מנות טעימות!</div></div>';

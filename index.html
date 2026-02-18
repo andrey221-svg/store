@@ -969,26 +969,7 @@ function shakeField(id) {
 }
 
 // ===== INIT =====
-(async function init() {
-  const isAdmin = window.location.search.includes('admin');
-
-  if (!isAdmin) {
-    // STORE MODE: load data.json and show store
-    try {
-      const res = await fetch('data.json?' + Date.now());
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.p && data.p.length > 0) { renderStore(data); return; }
-      }
-    } catch (e) { console.error('Could not load store data:', e); }
-    // If no data.json, show a "no menu" message
-    document.getElementById('adminPage').style.display = 'none';
-    document.getElementById('storePage').style.display = 'block';
-    document.getElementById('productGrid').innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);"><div style="font-size:48px;margin-bottom:16px;">🍽️</div><div style="font-size:18px;">התפריט עדיין לא פורסם</div><div style="font-size:14px;margin-top:8px;">בקרוב יהיו כאן מנות טעימות!</div></div>';
-    return;
-  }
-
-  // ADMIN MODE
+function initAdmin() {
   ['pName','pPrice','pStock','pDesc'].forEach(id => {
     document.getElementById(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') addProduct(); });
   });
@@ -1010,6 +991,28 @@ function shakeField(id) {
       }));
     } catch(e) {}
   }, 2000);
+}
+
+(async function init() {
+  const isAdmin = window.location.search.includes('admin');
+  const isLocal = window.location.protocol === 'file:';
+
+  // If explicitly admin mode or local file — show admin
+  if (isAdmin || isLocal) { initAdmin(); return; }
+
+  // Try to load store data from data.json
+  try {
+    const res = await fetch('data.json?' + Date.now());
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.p && data.p.length > 0) { renderStore(data); return; }
+    }
+  } catch (e) { console.error('Could not load store data:', e); }
+
+  // No data.json found — show "menu not published" message
+  document.getElementById('adminPage').style.display = 'none';
+  document.getElementById('storePage').style.display = 'block';
+  document.getElementById('productGrid').innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);"><div style="font-size:48px;margin-bottom:16px;">🍽️</div><div style="font-size:18px;">התפריט עדיין לא פורסם</div><div style="font-size:14px;margin-top:8px;">בקרוב יהיו כאן מנות טעימות!</div></div>';
 })();
 </script>
 </body>

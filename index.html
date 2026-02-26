@@ -634,6 +634,12 @@ function getGHToken() {
 function setGHToken(t) {
   localStorage.setItem('gh_token', t);
 }
+function encodeToken(t) {
+  return btoa(t.split('').reverse().join(''));
+}
+function decodeToken(t) {
+  try { return atob(t).split('').reverse().join(''); } catch(e) { return ''; }
+}
 
 function previewImage(event) {
   const file = event.target.files[0];
@@ -780,7 +786,7 @@ function buildStoreData() {
   return {
     s: document.getElementById('storeName').value.trim() || 'התפריט שלי',
     ph: document.getElementById('sellerPhone').value.trim(),
-    t: getGHToken(),
+    t: encodeToken(getGHToken()),
     p: products.map(p => ({ n: p.name, pr: p.price, d: p.desc, st: p.stock, im: p.img || '' }))
   };
 }
@@ -985,7 +991,7 @@ async function sendOrder() {
 }
 
 async function updateStockAfterOrder(orderedItems) {
-  const token = storeData.t;
+  const token = decodeToken(storeData.t);
   if (!token) return;
   try {
     // Reduce stock in storeData

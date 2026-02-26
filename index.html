@@ -511,7 +511,8 @@ body {
         <input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" />
       </label>
     </div>
-    <button class="btn btn-add" onclick="addProduct()">➕ הוסף מנה</button>
+    <button class="btn btn-add" id="addBtn" onclick="addProduct()">➕ הוסף מנה</button>
+    <button class="btn btn-add" id="cancelEditBtn" onclick="cancelEdit()" style="display:none;background:transparent;color:var(--text-light);border:1.5px solid var(--border);margin-top:6px;">✕ ביטול עריכה</button>
     <div class="product-admin-list" id="adminProductList">
       <div class="empty-products">
         <div class="icon">🍽️</div>
@@ -621,6 +622,7 @@ let products = [];
 let cart = {};
 let storeData = null;
 let currentImageData = '';
+let editingId = null;
 
 const GH_REPO = 'andrey221-svg/store';
 const GH_FILE = 'data.json';
@@ -673,7 +675,21 @@ function addProduct() {
   if (!name) { shakeInput('pName'); return; }
   if (isNaN(price) || price <= 0) { shakeInput('pPrice'); return; }
   if (isNaN(stock) || stock <= 0) { shakeInput('pStock'); return; }
-  products.push({ name, price, desc, stock, img: currentImageData, id: Date.now() });
+  if (editingId !== null) {
+    const idx = products.findIndex(p => p.id === editingId);
+    if (idx !== -1) {
+      products[idx].name = name;
+      products[idx].price = price;
+      products[idx].desc = desc;
+      products[idx].stock = stock;
+      if (currentImageData) products[idx].img = currentImageData;
+    }
+    editingId = null;
+    document.getElementById('addBtn').textContent = '➕ הוסף מנה';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+  } else {
+    products.push({ name, price, desc, stock, img: currentImageData, id: Date.now() });
+  }
   renderAdminProducts();
   document.getElementById('pName').value = '';
   document.getElementById('pPrice').value = '';
@@ -681,6 +697,39 @@ function addProduct() {
   document.getElementById('pStock').value = '';
   clearImageUpload();
   document.getElementById('pName').focus();
+}
+
+function editProduct(id) {
+  const p = products.find(p => p.id === id);
+  if (!p) return;
+  editingId = id;
+  document.getElementById('pName').value = p.name;
+  document.getElementById('pPrice').value = p.price;
+  document.getElementById('pDesc').value = p.desc;
+  document.getElementById('pStock').value = p.stock;
+  if (p.img) {
+    currentImageData = p.img;
+    const area = document.getElementById('imgUploadArea');
+    area.innerHTML = `<img src="${p.img}" /><input type="file" id="pImage" accept="image/*" onchange="previewImage(event)" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" />`;
+    area.classList.add('has-image');
+  } else {
+    clearImageUpload();
+  }
+  document.getElementById('addBtn').textContent = '💾 שמור שינויים';
+  document.getElementById('cancelEditBtn').style.display = '';
+  document.getElementById('pName').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('pName').focus();
+}
+
+function cancelEdit() {
+  editingId = null;
+  document.getElementById('addBtn').textContent = '➕ הוסף מנה';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+  document.getElementById('pName').value = '';
+  document.getElementById('pPrice').value = '';
+  document.getElementById('pDesc').value = '';
+  document.getElementById('pStock').value = '';
+  clearImageUpload();
 }
 
 function shakeInput(id) {
@@ -715,8 +764,9 @@ function renderAdminProducts() {
           <div style="font-size:12px;color:var(--text-light);">${p.desc ? esc(p.desc) + ' · ' : ''}זמין: ${p.stock}</div>
         </div>
       </div>
-      <div style="display:flex;align-items:center;gap:14px;">
+      <div style="display:flex;align-items:center;gap:8px;">
         <div class="product-admin-price">₪${p.price.toFixed(0)}</div>
+        <button class="btn-remove" style="background:rgba(201,169,110,0.12);color:var(--gold-dark);" onclick="editProduct(${p.id})">✏️</button>
         <button class="btn-remove" onclick="removeProduct(${p.id})">✕</button>
       </div>
     </div>

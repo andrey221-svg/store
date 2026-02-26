@@ -780,6 +780,7 @@ function buildStoreData() {
   return {
     s: document.getElementById('storeName').value.trim() || 'התפריט שלי',
     ph: document.getElementById('sellerPhone').value.trim(),
+    t: getGHToken(),
     p: products.map(p => ({ n: p.name, pr: p.price, d: p.desc, st: p.stock, im: p.img || '' }))
   };
 }
@@ -961,6 +962,11 @@ async function sendOrder() {
       body: JSON.stringify({ chat_id: TG_CHAT, text: msg })
     });
     if (res.ok) {
+      // Collect ordered items before clearing cart
+      const orderedItems = [];
+      Object.keys(cart).forEach(i => {
+        if (cart[i] > 0) orderedItems.push({ index: parseInt(i), qty: cart[i] });
+      });
       document.getElementById('checkoutModal').classList.remove('active');
       document.getElementById('successModal').classList.add('active');
       cart = {};
@@ -971,9 +977,48 @@ async function sendOrder() {
       document.getElementById('custName').value = '';
       document.getElementById('custPhone').value = '';
       document.getElementById('custNotes').value = '';
+      // Update stock in background
+      updateStockAfterOrder(orderedItems);
     } else { throw new Error('fail'); }
   } catch (e) { sendError.textContent = 'שגיאה בשליחה. נסה שוב.'; sendError.style.display = 'block'; }
   sendBtn.disabled = false; sendBtn.textContent = 'שלח הזמנה';
+}
+
+async function updateStockAfterOrder(orderedItems) {
+  const token = storeData.t;
+  if (!token) return;
+  try {
+    // Reduce stock in storeData
+    orderedItems.forEach(item => {
+      storeData.p[item.index].st = Math.max(0, storeData.p[item.index].st - item.qty);
+    });
+    // Save updated data to GitHub
+    const jsonStr = JSON.stringify(storeData);
+    const content = btoa(unescape(encodeURIComponent(jsonStr)));
+    let sha = '';
+    try {
+      const getRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, {
+        headers: { 'Authorization': `token ${token}` }
+      });
+      if (getRes.ok) { const f = await getRes.json(); sha = f.sha; }
+    } catch(e) {}
+    const body = { message: 'Update stock after order', content };
+    if (sha) body.sha = sha;
+    await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    // Update UI: stock text and buttons
+    orderedItems.forEach(item => {
+      const i = item.index;
+      const newStock = storeData.p[i].st;
+      const stockEl = document.querySelectorAll('.product-stock')[i];
+      if (stockEl) stockEl.textContent = newStock > 0 ? 'זמין: ' + newStock : 'אזל!';
+      const plus = document.getElementById('plus-' + i);
+      if (plus && newStock <= 0) plus.disabled = true;
+    });
+  } catch(e) { console.error('Stock update failed:', e); }
 }
 
 function closeSuccess() { document.getElementById('successModal').classList.remove('active'); }

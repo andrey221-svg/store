@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facebook Bot - תוצאות חיפוש</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #1c1e21; min-height: 100vh; }
+  header { background: #1877f2; color: white; padding: 18px 24px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  header h1 { font-size: 1.3rem; }
+  header span { font-size: 0.85rem; opacity: 0.85; }
+  .toolbar { background: white; padding: 14px 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #ddd; }
+  .btn { padding: 8px 18px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all .15s; }
+  .btn-primary { background: #1877f2; color: white; }
+  .btn-primary:hover { background: #1669d3; }
+  .btn-outline { background: white; color: #1877f2; border: 1.5px solid #1877f2; }
+  .btn-outline:hover { background: #e7f0fd; }
+  .tab { padding: 8px 20px; border: none; background: none; cursor: pointer; font-size: 0.95rem; border-bottom: 3px solid transparent; color: #606770; transition: all .15s; }
+  .tab.active { color: #1877f2; border-bottom-color: #1877f2; font-weight: 600; }
+  .search-box { flex: 1; min-width: 200px; padding: 8px 14px; border: 1.5px solid #ddd; border-radius: 20px; font-size: 0.9rem; outline: none; }
+  .search-box:focus { border-color: #1877f2; }
+  .stats { background: white; padding: 16px 24px; display: flex; gap: 24px; border-bottom: 1px solid #ddd; font-size: 0.9rem; color: #606770; }
+  .stat-val { font-weight: 700; color: #1c1e21; font-size: 1.1rem; }
+  main { max-width: 1100px; margin: 0 auto; padding: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card { background: white; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); transition: box-shadow .2s; position: relative; }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+  .card-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin-bottom: 10px; }
+  .badge-job { background: #e7f3ff; color: #1877f2; }
+  .badge-market { background: #fff3e0; color: #e65100; }
+  .card h3 { font-size: 1rem; margin-bottom: 8px; line-height: 1.4; }
+  .card .price { font-size: 1.15rem; font-weight: 700; color: #42b883; margin: 6px 0; }
+  .card .company, .card .location { font-size: 0.85rem; color: #606770; margin: 3px 0; }
+  .card .details { font-size: 0.82rem; color: #888; margin-top: 8px; white-space: pre-line; max-height: 60px; overflow: hidden; }
+  .card .kw-tag { font-size: 0.75rem; background: #f0f2f5; color: #606770; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 8px; }
+  .card a { display: block; margin-top: 12px; color: #1877f2; font-size: 0.85rem; text-decoration: none; font-weight: 600; }
+  .card a:hover { text-decoration: underline; }
+  .card .date { font-size: 0.72rem; color: #aaa; position: absolute; top: 12px; left: 16px; }
+  .empty { text-align: center; padding: 60px; color: #888; }
+  .empty h2 { font-size: 1.4rem; margin-bottom: 10px; }
+  .upload-area { border: 2px dashed #1877f2; border-radius: 10px; padding: 40px; text-align: center; cursor: pointer; color: #1877f2; background: #f0f6ff; margin: 40px auto; max-width: 500px; }
+  .upload-area:hover { background: #e0ecff; }
+  #file-input { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="white"><path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm1.5 21.5h-3v-8.5H13V12h1.5v-1.5c0-2.485 1.015-4 3.5-4h2.5v3h-1.5c-1.015 0-1.5.5-1.5 1.5V12h3l-.5 3h-2.5v8.5z"/></svg>
+  <div>
+    <h1>Facebook Search Bot</h1>
+    <span>תוצאות חיפוש משרות ומוצרים</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button class="tab active" onclick="setTab('all')">הכל</button>
+  <button class="tab" onclick="setTab('job')">💼 משרות</button>
+  <button class="tab" onclick="setTab('marketplace')">🛍 שוק</button>
+  <input type="text" class="search-box" placeholder="חיפוש בתוצאות..." oninput="filterCards(this.value)" />
+  <label class="btn btn-outline" for="file-input">טעינת תוצאות (JSON)</label>
+  <input type="file" id="file-input" accept=".json" onchange="loadFile(this)" />
+  <button class="btn btn-primary" onclick="exportCSV()">ייצוא CSV</button>
+</div>
+
+<div class="stats" id="stats" style="display:none">
+  <div>💼 משרות: <span class="stat-val" id="stat-jobs">0</span></div>
+  <div>🛍 פריטים: <span class="stat-val" id="stat-market">0</span></div>
+  <div>📅 תאריך הרצה: <span class="stat-val" id="stat-date">-</span></div>
+</div>
+
+<main>
+  <div id="upload-prompt">
+    <div class="upload-area" onclick="document.getElementById('file-input').click()">
+      <div style="font-size:2.5rem;margin-bottom:12px">📂</div>
+      <div style="font-size:1.1rem;font-weight:600">גרור לכאן קובץ results.json</div>
+      <div style="font-size:0.85rem;margin-top:8px;opacity:.7">או לחץ לבחירת קובץ</div>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<script>
+let allData = [];
+let currentTab = 'all';
+let currentSearch = '';
+
+function loadFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      renderData(data);
+    } catch (err) {
+      alert('קובץ JSON לא תקין');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function renderData(data) {
+  document.getElementById('upload-prompt').style.display = 'none';
+  document.getElementById('stats').style.display = 'flex';
+
+  const jobs = data.jobs || [];
+  const market = data.marketplace || [];
+  allData = [...jobs, ...market];
+
+  document.getElementById('stat-jobs').textContent = jobs.length;
+  document.getElementById('stat-market').textContent = market.length;
+  if (data.run_date) {
+    const d = new Date(data.run_date);
+    document.getElementById('stat-date').textContent = d.toLocaleString('he-IL');
+  }
+
+  renderCards();
+}
+
+function renderCards() {
+  const grid = document.getElementById('grid');
+  let items = allData;
+  if (currentTab !== 'all') items = items.filter(i => i.type === currentTab);
+  if (currentSearch) {
+    const q = currentSearch.toLowerCase();
+    items = items.filter(i =>
+      (i.title||'').toLowerCase().includes(q) ||
+      (i.details||'').toLowerCase().includes(q) ||
+      (i.keyword||'').toLowerCase().includes(q)
+    );
+  }
+
+  if (!items.length) {
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><h2>אין תוצאות</h2><p>נסה חיפוש אחר</p></div>';
+    return;
+  }
+
+  grid.innerHTML = items.map(item => {
+    const badgeClass = item.type === 'job' ? 'badge-job' : 'badge-market';
+    const badgeText = item.type === 'job' ? '💼 משרה' : '🛍 שוק';
+    const date = item.found_at ? new Date(item.found_at).toLocaleTimeString('he-IL') : '';
+    return `
+    <div class="card">
+      <span class="card-badge ${badgeClass}">${badgeText}</span>
+      ${date ? `<span class="date">${date}</span>` : ''}
+      <h3>${esc(item.title || 'ללא כותרת')}</h3>
+      ${item.price ? `<div class="price">${esc(item.price)}</div>` : ''}
+      ${item.company ? `<div class="company">🏢 ${esc(item.company)}</div>` : ''}
+      ${item.location ? `<div class="location">📍 ${esc(item.location)}</div>` : ''}
+      ${item.details ? `<div class="details">${esc(item.details)}</div>` : ''}
+      ${item.keyword ? `<span class="kw-tag">${esc(item.keyword)}</span>` : ''}
+      ${item.url ? `<a href="${item.url}" target="_blank">פתח בפייסבוק ↗</a>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function setTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  renderCards();
+}
+
+function filterCards(q) {
+  currentSearch = q;
+  renderCards();
+}
+
+function exportCSV() {
+  if (!allData.length) return alert('אין נתונים לייצוא');
+  const rows = [['סוג','מילת חיפוש','כותרת','מחיר','חברה','מיקום','קישור','תאריך']];
+  allData.forEach(r => rows.push([
+    r.type==='job'?'משרה':'שוק',
+    r.keyword||'', r.title||'', r.price||'',
+    r.company||'', r.location||'', r.url||'', r.found_at||''
+  ]));
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'facebook_results.csv';
+  a.click();
+}
+
+// Drag and drop support
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => {
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try { renderData(JSON.parse(ev.target.result)); }
+    catch { alert('קובץ JSON לא תקין'); }
+  };
+  reader.readAsText(file);
+});
+
+// Auto-load results.json if available (when served locally)
+fetch('results.json')
+  .then(r => r.json())
+  .then(renderData)
+  .catch(() => {});
+</script>
+</body>
+</html>

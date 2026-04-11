@@ -20,8 +20,8 @@
   },
   "output": {
     "results_file": "results.json",
-    "notify_telegram": false,
-    "telegram_token": "",
+    "notify_telegram": true,
+    "telegram_token": "TOKEN_FROM_BOTFATHER",
     "telegram_chat_id": ""
   },
   "options": {

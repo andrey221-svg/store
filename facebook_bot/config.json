@@ -1,0 +1,36 @@
+{
+  "credentials": {
+    "email": "YOUR_FACEBOOK_EMAIL",
+    "password": "YOUR_FACEBOOK_PASSWORD"
+  },
+  "search": {
+    "keywords": [
+      "מפתח Python",
+      "מפתח Full Stack",
+      "ניהול פרויקטים",
+      "מנהל שיווק",
+      "מנהל הכנות"
+    ],
+    "marketplace_keywords": [
+      "מחשב נייד",
+      "אופניים",
+      "ספה"
+    ],
+    "location": "תל אביב",
+    "max_results_per_keyword": 20
+  },
+  "output": {
+    "results_file": "results.json",
+    "notify_telegram": true,
+    "telegram_token": "TOKEN_FROM_BOTFATHER",
+    "telegram_chat_id": ""
+  },
+  "options": {
+    "headless": false,
+    "slow_mo_ms": 500,
+    "search_jobs": true,
+    "search_marketplace": true,
+    "min_price": 0,
+    "max_price": 0
+  }
+}

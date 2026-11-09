@@ -1,0 +1,4 @@
+node_modules/
+.env
+# WhatsApp login, browser logins, conversations - private, never commit
+data/
